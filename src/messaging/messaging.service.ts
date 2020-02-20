@@ -16,8 +16,16 @@ export class MessagingService implements OnModuleInit {
   async onModuleInit() {
     this.logger.log(`Should initial at the end`);
 
-    await this.demoQueueProducer.send({
-      hello: 'hi2',
-    });
+    await this.demoQueueProducer.send(
+      {
+        hello: 'hi2',
+      },
+      {
+        headers: {
+          'x-max-retries': 3,
+          'x-retry-attempted': 0,
+        },
+      },
+    );
   }
 }

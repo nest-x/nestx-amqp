@@ -8,6 +8,7 @@ import {
   AMQPAsyncConnectionOptions,
   AMQPConnectionOptions,
 } from './amqp.options';
+
 @Global()
 @Module({})
 export class AMQPModule {
@@ -41,3 +42,7 @@ export class AMQPModule {
     };
   }
 }
+
+export * from './amqp.constants';
+export * from './amqp.options';
+export * from './amqp.providers';

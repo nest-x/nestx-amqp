@@ -1,32 +1,8 @@
-import * as amqp from 'amqp-connection-manager';
-import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { AMQP_CONNECTION } from '../amqp/amqp.constants';
+import { Injectable } from '@nestjs/common';
+import { SimpleAbstractProducer } from '../amqp/shared/simple.abstract.producer';
 
 @Injectable()
-export class DemoQueueProducer implements OnModuleInit {
-  private readonly logger = new Logger(DemoQueueProducer.name);
-
-  private queue = 'DEMO.QUEUE';
-  private channelWrapper: amqp.ChannelWrapper;
-
-  constructor(
-    @Inject(AMQP_CONNECTION)
-    readonly connectionManager: amqp.AmqpConnectionManager,
-  ) {
-    this.channelWrapper = this.connectionManager.createChannel({
-      json: true,
-      setup: channel => {
-        return channel.assertQueue(this.queue);
-      },
-    });
-  }
-
-  async onModuleInit() {
-    await this.channelWrapper.waitForConnect();
-  }
-
-  async send(message) {
-    this.logger.log(`Send message: ${JSON.stringify(message)}`);
-    await this.channelWrapper.sendToQueue(this.queue, message);
-  }
+export class DemoQueueProducer extends SimpleAbstractProducer {
+  queue = 'DEMO.QUEUE';
+  queueOptions = {};
 }
