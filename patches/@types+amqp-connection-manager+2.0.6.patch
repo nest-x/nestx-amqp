@@ -1,0 +1,17 @@
+diff --git a/node_modules/@types/amqp-connection-manager/index.d.ts b/node_modules/@types/amqp-connection-manager/index.d.ts
+index cee7b45..73d2a3a 100644
+--- a/node_modules/@types/amqp-connection-manager/index.d.ts
++++ b/node_modules/@types/amqp-connection-manager/index.d.ts
+@@ -206,4 +206,12 @@ export interface ChannelWrapper extends EventEmitter {
+ 	 * Close a channel, clean up resources associated with it.
+ 	 */
+ 	close(): Promise<void>;
++
++
++	/**
++	 * Returns a Promise which resolves when this channel next connects.
++	 * (Mainly here for unit testing...)
++	 *
++	 */
++	waitForConnect(): Promise<void>;
+ }

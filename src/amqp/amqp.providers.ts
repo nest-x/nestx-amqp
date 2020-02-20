@@ -20,6 +20,6 @@ export const createAsyncAMQPConnectionOptions = (
   options: AMQPAsyncConnectionOptions,
 ) => ({
   provide: AMQP_CONNECTION_OPTIONS,
-  useFactory: options.useFactory,
   inject: options.inject,
+  useFactory: options.useFactory,
 });

@@ -1,55 +1,23 @@
 import * as amqp from 'amqp-connection-manager';
-import {
-  Inject,
-  Injectable,
-  Logger,
-  OnModuleDestroy,
-  OnModuleInit,
-} from '@nestjs/common';
+import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { AMQP_CONNECTION } from '../amqp/amqp.constants';
+import { DemoQueueProducer } from './demo-queue-producer.service';
 
-const MESSAGING_QUEUE = `DEMO.QUEUE`;
-
-/**
- * @desc message sample
- *       send message
- *       handle message
- * */
 @Injectable()
-export class MessagingService implements OnModuleInit, OnModuleDestroy {
+export class MessagingService implements OnModuleInit {
   private readonly logger = new Logger(MessagingService.name);
 
   constructor(
     @Inject(AMQP_CONNECTION)
     readonly connectionManager: amqp.AmqpConnectionManager,
-  ) {
-    this.logger.log(
-      `AMQPConnectionManager status: ${connectionManager.isConnected()}`,
-    );
-  }
+    readonly demoQueueProducer: DemoQueueProducer,
+  ) {}
 
   async onModuleInit() {
-    const channelWrapper = await this.connectionManager.createChannel({
-      json: true,
-      setup: channel => {
-        return channel.assertQueue(MESSAGING_QUEUE);
-      },
+    this.logger.log(`Should initial at the end`);
+
+    await this.demoQueueProducer.send({
+      hello: 'hi2',
     });
-
-    const helloMessage = {
-      id: Math.random(),
-      data: 'hello',
-    };
-
-    await channelWrapper.sendToQueue(MESSAGING_QUEUE, helloMessage);
-
-    this.logger.log(
-      `AMQPConnectionManager status: ${this.connectionManager.isConnected()}`,
-    );
-  }
-
-  async onModuleDestroy() {
-    await this.connectionManager.close();
-    this.logger.log(`Close connection when receive TERM signal`);
   }
 }
