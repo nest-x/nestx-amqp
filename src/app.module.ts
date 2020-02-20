@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { AmqpModule } from './amqp/amqp.module';
 
 @Module({
-  imports: [],
+  imports: [AmqpModule],
   controllers: [],
   providers: [],
 })
