@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nest-x/nestx-amqp/compare/v1.0.0...v1.0.1) (2020-02-21)
+
+
+### Bug Fixes
+
+* release issue & rename npm package ([60012bf](https://github.com/nest-x/nestx-amqp/commit/60012bf2455336df117e2a13c8dda79ae4926e62))
+
 # 1.0.0 (2020-02-21)
 
 
