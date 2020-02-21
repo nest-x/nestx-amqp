@@ -1,4 +1,4 @@
-# @nestx/amqp
+# nestx-amqp
 
 [![NPM](https://img.shields.io/npm/v/@nestx/amqp.svg)](https://www.npmjs.com/package/@nestx/amqp)
 [![Github Workflow Status](https://github.com/nest-x/nestx-amqp/workflows/ci/badge.svg)](https://github.com/nest-x/nestx-amqp)
@@ -19,7 +19,7 @@ Provide an `AMQP` connection as NestJS Module. Internally use [amqp-connection-m
 ## Installation
 
 ```shell script
-yarn add @nestx/amqp
+yarn add nestx-amqp
 ```
 
 
@@ -30,7 +30,7 @@ yarn add @nestx/amqp
 
 ```typescript
 import { Module } from '@nestjs/common';
-import { AMQPModule } from '@nestx/amqp;
+import { AMQPModule } from 'nestx-amqp;
 
 
 @Module({
@@ -52,11 +52,11 @@ export class AppModule {}
 
 Use Symbol `AMQP_CONNECTION` for Injection:
 
-Below is a abstract producer code sample. (provide at `@nestx/amqp` as external shared class)
+Below is a abstract producer code sample. (provide at `nestx-amqp` as external shared class)
 
 ```typescript
 import { Inject, OnModuleInit } from '@nestjs/common';
-import { AMQP_CONNECTION } from '../amqp.constants';
+import { AMQP_CONNECTION } from 'nestx-amqp';
 import * as amqp from 'amqp-connection-manager';
 import { Options } from 'amqplib/properties';
 
