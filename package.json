@@ -1,5 +1,5 @@
 {
-  "name": "@nestx/amqp",
+  "name": "nestx-amqp",
   "version": "1.0.1",
   "description": "nestjs x amqp-connection-manager module",
   "author": "aquariuslt <superaquariuslt@gmail.com>",
