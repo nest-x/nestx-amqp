@@ -30,7 +30,7 @@ yarn add nestx-amqp
 
 ```typescript
 import { Module } from '@nestjs/common';
-import { AMQPModule } from 'nestx-amqp;
+import { AMQPModule } from 'nestx-amqp';
 
 
 @Module({
