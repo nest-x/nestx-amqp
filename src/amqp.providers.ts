@@ -1,8 +1,5 @@
 import * as amqp from 'amqp-connection-manager';
-import {
-  AMQPAsyncConnectionOptions,
-  AMQPConnectionOptions,
-} from './amqp.options';
+import { AMQPAsyncConnectionOptions, AMQPConnectionOptions } from './amqp.options';
 import { AMQP_CONNECTION, AMQP_CONNECTION_OPTIONS } from './amqp.constants';
 
 /**
@@ -13,13 +10,11 @@ export const createAMQPConnection = () => ({
   inject: [AMQP_CONNECTION_OPTIONS],
   useFactory: async (args: AMQPConnectionOptions) => {
     return amqp.connect(args.urls, args.options);
-  },
+  }
 });
 
-export const createAsyncAMQPConnectionOptions = (
-  options: AMQPAsyncConnectionOptions,
-) => ({
+export const createAsyncAMQPConnectionOptions = (options: AMQPAsyncConnectionOptions) => ({
   provide: AMQP_CONNECTION_OPTIONS,
   inject: options.inject,
-  useFactory: options.useFactory,
+  useFactory: options.useFactory
 });

@@ -11,15 +11,15 @@ export abstract class SimpleAbstractProducer implements OnModuleInit {
 
   public constructor(
     @Inject(AMQP_CONNECTION)
-    readonly connectionManager: amqp.AmqpConnectionManager,
+    readonly connectionManager: amqp.AmqpConnectionManager
   ) {}
 
   async onModuleInit() {
     this.channelWrapper = this.connectionManager.createChannel({
       json: true,
-      setup: channel => {
+      setup: (channel) => {
         return channel.assertQueue(this.queue);
-      },
+      }
     });
     await this.channelWrapper.waitForConnect();
   }
