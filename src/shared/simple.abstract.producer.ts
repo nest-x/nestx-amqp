@@ -1,7 +1,7 @@
 import { Inject, OnModuleInit } from '@nestjs/common';
 import { AMQP_CONNECTION } from '../amqp.constants';
 import * as amqp from 'amqp-connection-manager';
-import { Options } from 'amqplib/properties';
+import { Options } from 'amqplib';
 
 export abstract class SimpleAbstractProducer implements OnModuleInit {
   channelWrapper: amqp.ChannelWrapper;
