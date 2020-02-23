@@ -1,6 +1,6 @@
 {
   "name": "nestx-amqp",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "nestjs x amqp-connection-manager module",
   "repository": "https://github.com/nest-x/nestx-amqp",
   "author": "Aquariuslt <superaquariuslt@gmail.com>",

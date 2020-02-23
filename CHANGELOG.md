@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/nest-x/nestx-amqp/compare/v1.0.4...v1.0.5) (2020-02-23)
+
+
+### Bug Fixes
+
+* resolve `amqplib/properties` import issue ([bfc44c4](https://github.com/nest-x/nestx-amqp/commit/bfc44c444e155d8b13a5184e82de619fa6602de4))
+
 ## [1.0.4](https://github.com/nest-x/nestx-amqp/compare/v1.0.3...v1.0.4) (2020-02-23)
 
 
