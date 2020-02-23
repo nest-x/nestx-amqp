@@ -1,8 +1,7 @@
 import * as amqp from 'amqp-connection-manager';
-import { Message } from 'amqplib';
+import { Message, Options } from 'amqplib';
 import { Inject, Logger, OnModuleInit } from '@nestjs/common';
 import { AMQP_CONNECTION } from '../amqp.constants';
-import { Options } from 'amqplib/properties';
 
 export abstract class SimpleAbstractConsumer implements OnModuleInit {
   private readonly absLogger = new Logger(SimpleAbstractConsumer.name);
