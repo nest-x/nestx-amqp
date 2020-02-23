@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/nest-x/nestx-amqp/compare/v1.0.2...v1.0.3) (2020-02-23)
+
+
+### Bug Fixes
+
+* **deps:** add `@types/amqplib` at devDependencies ([ec78fe2](https://github.com/nest-x/nestx-amqp/commit/ec78fe2a739eb76ea9c1840755f34647b2d054cf))
+
 ## [1.0.2](https://github.com/nest-x/nestx-amqp/compare/v1.0.1...v1.0.2) (2020-02-21)
 
 
