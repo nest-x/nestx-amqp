@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/nest-x/nestx-amqp/compare/v1.0.5...v1.0.6) (2020-02-24)
+
+
+### Bug Fixes
+
+* remove patches for `@types/amqp-connection-manager` ([99063d2](https://github.com/nest-x/nestx-amqp/commit/99063d28dde74ec218e9806f8fdaba1c1943ffbc))
+
 ## [1.0.5](https://github.com/nest-x/nestx-amqp/compare/v1.0.4...v1.0.5) (2020-02-23)
 
 
