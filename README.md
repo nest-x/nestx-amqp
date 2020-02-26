@@ -50,21 +50,22 @@ export class AppModule {}
 
 ### Inject AMQPConnectionManager
 
+
 Use Symbol `AMQP_CONNECTION` for Injection:
 
-Below is a abstract producer code sample. (provide at `nestx-amqp` as external shared class)
+Below is a abstract producer code sample.
 
 ```typescript
 import { Inject, OnModuleInit } from '@nestjs/common';
 import { AMQP_CONNECTION } from 'nestx-amqp';
 import * as amqp from 'amqp-connection-manager';
-import { Options } from 'amqplib/properties';
+import { Options } from 'amqplib';
 
 export abstract class SimpleAbstractProducer implements OnModuleInit {
   channelWrapper: amqp.ChannelWrapper;
 
-  abstract get queue(): string;
-  abstract get queueOptions(): Options.AssertQueue;
+  abstract getQueue(): string;
+  abstract getQueueOptions(): Options.AssertQueue;
 
   public constructor(
     @Inject(AMQP_CONNECTION)
