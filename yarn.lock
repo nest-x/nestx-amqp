@@ -718,10 +718,10 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.0.0.tgz#9c13c2574c92d4503b005feca8f2e16cc1611506"
   integrity sha512-KYyTT/T6ALPkIRd2Ge080X/BsXvy9O0hcWTtMWkPvwAwF99+vn6Dv4GzrFT/Nn1LePr+FFDbRXXlqmsy9lw2zA==
 
-"@types/amqp-connection-manager@2.0.6":
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@types/amqp-connection-manager/-/amqp-connection-manager-2.0.6.tgz#e3226171f8430053ee45939452bec1828415b76f"
-  integrity sha512-eKE5l8aTRLKmhIU0uAjAskQdysrxoYA8tXC8TNSjg8xz0jxX3HQwcVWvAZuP3JImHNykJcro4ga9bQeGwcnkCQ==
+"@types/amqp-connection-manager@2.0.7":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@types/amqp-connection-manager/-/amqp-connection-manager-2.0.7.tgz#3208af51a8e8884a459c59b6ecfcdc4476934885"
+  integrity sha512-bbKqIhED7acqWuynLBhvhJC5NnKoYvqHJLkupPyvtbbQRKajMfiz93tx43LFGa9c18nXWLYWhjQXptgEKGFsOw==
   dependencies:
     "@types/amqplib" "*"
 
