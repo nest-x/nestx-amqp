@@ -1,13 +1,16 @@
 name: publish
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
     steps:
       - name: SCM
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Setup Node Environment
         uses: actions/setup-node@v1
         with:
@@ -15,6 +18,7 @@ jobs:
       - name: Install Dependencies and Build
         run: |
           yarn
+          yarn test
           yarn build
       - name: Semantic Release
         run: |

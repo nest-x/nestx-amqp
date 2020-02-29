@@ -24,10 +24,12 @@ reports
 
 # editorconfig
 .editorconfig
+.prettierrc
 
 # source
 src
 tsconfig.json
+nest-cli.json
 
 # test
 __tests__
@@ -36,6 +38,6 @@ __tests__
 docker-compose.test.yml
 docker-compose.yml
 
-
 # github workflow
 .github
+renovate.json
