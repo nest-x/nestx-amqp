@@ -1,4 +1,4 @@
-import * as proxyquire from 'proxyquire';
+// import * as proxyquire from 'proxyquire';
 
 export class FakeAMQPConnectionManager {
   private urls;

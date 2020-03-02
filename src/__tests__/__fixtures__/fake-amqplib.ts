@@ -6,32 +6,31 @@ export class FakeAMQP {
   private url;
   private failConnections;
   private deadServers;
+  private connect
 
   constructor() {
     this.reset();
   }
 
-  kill() {
+  kill(): void {
     const err = new Error('Died in a fire');
     this.connection.emit('error', err);
     this.connection.emit('close', err);
   }
 
-  simulateRemoteClose() {
+  simulateRemoteClose(): void {
     this.connection.emit('close', new Error('Connection closed'));
   }
 
-  simulateRemoteBlock() {
+  simulateRemoteBlock(): void {
     this.connection.emit('blocked', new Error('Connection blocked'));
   }
 
-  simulateRemoteUnblock() {
+  simulateRemoteUnblock(): void {
     this.connection.emit('unblocked');
   }
 
-  connect() {}
-
-  reset() {
+  reset(): void {
     this.connection = null;
     this.url = null;
     this.failConnections = false;
@@ -72,33 +71,33 @@ export class FakeConfirmChannel extends EventEmitter {
       return true;
     });
 
-    this.ack = sinon.spy(function(message, allUpTo) {});
+    this.ack = sinon.spy(function() {});
 
     this.ackAll = sinon.spy(function() {});
 
-    this.nack = sinon.spy(function(message, allUpTo, requeue) {});
+    this.nack = sinon.spy(function() {});
 
-    this.nackAll = sinon.spy(function(requeue) {});
+    this.nackAll = sinon.spy(function() {});
 
-    this.assertQueue = sinon.spy(function(queue, options) {});
+    this.assertQueue = sinon.spy(function() {});
 
-    this.bindQueue = sinon.spy(function(queue, source, pattern, args) {});
+    this.bindQueue = sinon.spy(function() {});
 
-    this.assertExchange = sinon.spy(function(exchange, type, options) {});
+    this.assertExchange = sinon.spy(function() {});
 
     this.close = sinon.spy(() => this.emit('close'));
   }
 
-  publish() {}
-  ack() {}
-  ackAll() {}
-  nack() {}
-  nackAll() {}
-  assertQueue() {}
-  bindQueue() {}
-  sendToQueue() {}
-  assertExchange() {}
-  close() {}
+  publish(): void {}
+  ack(): void {}
+  ackAll(): void {}
+  nack(): void {}
+  nackAll(): void {}
+  assertQueue(): void {}
+  bindQueue(): void {}
+  sendToQueue(): void {}
+  assertExchange(): void {}
+  close(): void {}
 }
 
 export class FakeConnection extends EventEmitter {
@@ -111,11 +110,11 @@ export class FakeConnection extends EventEmitter {
     this._closed = false;
   }
 
-  createConfirmChannel() {
+  createConfirmChannel(): Promise<new () => void> {
     return Promise.resolve(new exports.FakeConfirmChannel());
   }
 
-  close() {
+  close(): Promise<void> {
     this._closed = true;
     return Promise.resolve();
   }
@@ -130,11 +129,11 @@ export class FakeAmqpConnectionManager extends EventEmitter {
     this.connected = false;
   }
 
-  isConnected() {
+  isConnected(): boolean {
     return this.connected;
   }
 
-  simulateConnect() {
+  simulateConnect(): void {
     const url = 'amqp://localhost';
     this._currentConnection = new exports.FakeConnection(url);
     this.connected = true;
@@ -144,7 +143,7 @@ export class FakeAmqpConnectionManager extends EventEmitter {
     });
   }
 
-  simulateDisconnect() {
+  simulateDisconnect(): void {
     this._currentConnection = null;
     this.connected = false;
     this.emit('disconnect', {
