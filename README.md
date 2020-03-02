@@ -59,16 +59,17 @@ Use Symbol `AMQP_CONNECTION` for Injection:
 Below is a abstract producer code sample.
 
 ```typescript
-import { Inject, OnModuleInit } from '@nestjs/common';
-import { AMQP_CONNECTION } from 'nestx-amqp';
-import * as amqp from 'amqp-connection-manager';
-import { Options } from 'amqplib';
+import { Inject, OnModuleInit } from '@nestjs/common'
+import { AMQP_CONNECTION } from 'nestx-amqp'
+import * as amqp from 'amqp-connection-manager'
+import { Options } from 'amqplib'
+
 
 export abstract class SimpleAbstractProducer implements OnModuleInit {
   channelWrapper: amqp.ChannelWrapper;
 
-  abstract getQueue(): string;
-  abstract getQueueOptions(): Options.AssertQueue;
+  abstract getQueue(): string
+  abstract getQueueOptions(): Options.AssertQueue
 
   public constructor(
     @Inject(AMQP_CONNECTION)
@@ -79,14 +80,14 @@ export abstract class SimpleAbstractProducer implements OnModuleInit {
     this.channelWrapper = this.connectionManager.createChannel({
       json: true,
       setup: (channel) => {
-        return channel.assertQueue(this.queue);
+        return channel.assertQueue(this.queue)
       }
     });
     await this.channelWrapper.waitForConnect();
   }
 
   async send(message, options?: Options.Publish) {
-    await this.channelWrapper.sendToQueue(this.queue, message, options);
+    await this.channelWrapper.sendToQueue(this.queue, message, options)
   }
 }
 

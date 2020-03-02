@@ -1,5 +1,4 @@
 {
-  "semi": true,
   "arrowParens": "always",
   "proseWrap": "never",
   "singleQuote": true,
