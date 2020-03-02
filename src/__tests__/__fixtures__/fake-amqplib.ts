@@ -1,154 +1,162 @@
-import { EventEmitter } from 'events';
-import * as sinon from 'sinon';
+import { EventEmitter } from 'events'
+import * as sinon from 'sinon'
 
 export class FakeAMQP {
-  private connection;
-  private url;
-  private failConnections;
-  private deadServers;
-
+  private connection
+  private url
+  private failConnections
+  private deadServers
+  private connect
+  
   constructor() {
-    this.reset();
+    this.reset()
   }
-
-  kill() {
-    const err = new Error('Died in a fire');
-    this.connection.emit('error', err);
-    this.connection.emit('close', err);
+  
+  kill(): void {
+    const err = new Error('Died in a fire')
+    this.connection.emit('error', err)
+    this.connection.emit('close', err)
   }
-
-  simulateRemoteClose() {
-    this.connection.emit('close', new Error('Connection closed'));
+  
+  simulateRemoteClose(): void {
+    this.connection.emit('close', new Error('Connection closed'))
   }
-
-  simulateRemoteBlock() {
-    this.connection.emit('blocked', new Error('Connection blocked'));
+  
+  simulateRemoteBlock(): void {
+    this.connection.emit('blocked', new Error('Connection blocked'))
   }
-
-  simulateRemoteUnblock() {
-    this.connection.emit('unblocked');
+  
+  simulateRemoteUnblock(): void {
+    this.connection.emit('unblocked')
   }
-
-  connect() {}
-
-  reset() {
-    this.connection = null;
-    this.url = null;
-    this.failConnections = false;
-    this.deadServers = [];
+  
+  reset(): void {
+    this.connection = null
+    this.url = null
+    this.failConnections = false
+    this.deadServers = []
     this.connect = sinon.spy((url) => {
       if (this.failConnections) {
-        return Promise.reject(new Error('No'));
+        return Promise.reject(new Error('No'))
       }
-
-      let allowConnection = true;
+      
+      let allowConnection = true
       this.deadServers.forEach((deadUrl) => {
         if (url.startsWith(deadUrl)) {
-          allowConnection = false;
+          allowConnection = false
         }
-      });
+      })
       if (!allowConnection) {
-        return Promise.reject(new Error(`Dead server ${url}`));
+        return Promise.reject(new Error(`Dead server ${url}`))
       }
-
-      this.connection = new exports.FakeConnection(url);
-      return Promise.resolve(this.connection);
-    });
+      
+      this.connection = new exports.FakeConnection(url)
+      return Promise.resolve(this.connection)
+    })
   }
 }
 
 export class FakeConfirmChannel extends EventEmitter {
   constructor() {
-    super();
+    super()
     this.publish = sinon.spy((exchange, routingKey, content, options, callback) => {
-      this.emit('publish', content);
-      callback(null);
-      return true;
-    });
-
+      this.emit('publish', content)
+      callback(null)
+      return true
+    })
+    
     this.sendToQueue = sinon.spy((queue, content, options, callback) => {
-      this.emit('sendToQueue', content);
-      callback(null);
-      return true;
-    });
-
-    this.ack = sinon.spy(function(message, allUpTo) {});
-
-    this.ackAll = sinon.spy(function() {});
-
-    this.nack = sinon.spy(function(message, allUpTo, requeue) {});
-
-    this.nackAll = sinon.spy(function(requeue) {});
-
-    this.assertQueue = sinon.spy(function(queue, options) {});
-
-    this.bindQueue = sinon.spy(function(queue, source, pattern, args) {});
-
-    this.assertExchange = sinon.spy(function(exchange, type, options) {});
-
-    this.close = sinon.spy(() => this.emit('close'));
+      this.emit('sendToQueue', content)
+      callback(null)
+      return true
+    })
+    
+    this.ack = sinon.spy(function() {})
+    
+    this.ackAll = sinon.spy(function() {})
+    
+    this.nack = sinon.spy(function() {})
+    
+    this.nackAll = sinon.spy(function() {})
+    
+    this.assertQueue = sinon.spy(function() {})
+    
+    this.bindQueue = sinon.spy(function() {})
+    
+    this.assertExchange = sinon.spy(function() {})
+    
+    this.close = sinon.spy(() => this.emit('close'))
   }
-
-  publish() {}
-  ack() {}
-  ackAll() {}
-  nack() {}
-  nackAll() {}
-  assertQueue() {}
-  bindQueue() {}
-  sendToQueue() {}
-  assertExchange() {}
-  close() {}
+  
+  publish(): void {}
+  
+  ack(): void {}
+  
+  ackAll(): void {}
+  
+  nack(): void {}
+  
+  nackAll(): void {}
+  
+  assertQueue(): void {}
+  
+  bindQueue(): void {}
+  
+  sendToQueue(): void {}
+  
+  assertExchange(): void {}
+  
+  close(): void {}
 }
 
 export class FakeConnection extends EventEmitter {
-  private url;
-  private _closed;
-
+  private url
+  private _closed
+  
   constructor(url) {
-    super();
-    this.url = url;
-    this._closed = false;
+    super()
+    this.url = url
+    this._closed = false
   }
-
-  createConfirmChannel() {
-    return Promise.resolve(new exports.FakeConfirmChannel());
+  
+  createConfirmChannel(): Promise<new () => void> {
+    return Promise.resolve(new exports.FakeConfirmChannel())
   }
-
-  close() {
-    this._closed = true;
-    return Promise.resolve();
+  
+  close(): Promise<void> {
+    this._closed = true
+    return Promise.resolve()
   }
 }
 
 export class FakeAmqpConnectionManager extends EventEmitter {
-  private connected;
-  private _currentConnection;
-
+  private connected
+  private _currentConnection
+  
   constructor() {
-    super();
-    this.connected = false;
+    super()
+    this.connected = false
   }
-
-  isConnected() {
-    return this.connected;
+  
+  isConnected(): boolean {
+    return this.connected
   }
-
-  simulateConnect() {
-    const url = 'amqp://localhost';
-    this._currentConnection = new exports.FakeConnection(url);
-    this.connected = true;
+  
+  simulateConnect(): void {
+    const url = 'amqp://localhost'
+    this._currentConnection = new exports.FakeConnection(url)
+    this.connected = true
     this.emit('connect', {
       connection: this._currentConnection,
-      url
-    });
+      url,
+    })
   }
-
-  simulateDisconnect() {
-    this._currentConnection = null;
-    this.connected = false;
+  
+  simulateDisconnect(): void {
+    this._currentConnection = null
+    this.connected = false
     this.emit('disconnect', {
-      err: new Error('Boom!')
-    });
+      err: new Error('Boom!'),
+    })
   }
 }

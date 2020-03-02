@@ -4,11 +4,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AMQPModule } from '../amqp.module';
 
 const amqplib = new FakeAMQP();
-const AMQPConnectionManager = proxyquire('amqp-connection-manager', {
+proxyquire('amqp-connection-manager', {
   amqplib: amqplib
 });
-
-
 
 describe('AMQP Module', () => {
   it('# should module define with sync connection options correctly', async () => {

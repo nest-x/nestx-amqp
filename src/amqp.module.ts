@@ -1,7 +1,7 @@
-import { DynamicModule, Global, Module } from '@nestjs/common';
-import { AMQP_CONNECTION, AMQP_CONNECTION_OPTIONS } from './amqp.constants';
-import { createAMQPConnection, createAsyncAMQPConnectionOptions } from './amqp.providers';
-import { AMQPAsyncConnectionOptions, AMQPConnectionOptions } from './amqp.options';
+import { DynamicModule, Global, Module } from '@nestjs/common'
+import { AMQP_CONNECTION, AMQP_CONNECTION_OPTIONS } from './amqp.constants'
+import { createAMQPConnection, createAsyncAMQPConnectionOptions } from './amqp.providers'
+import { AMQPAsyncConnectionOptions, AMQPConnectionOptions } from './amqp.options'
 
 @Global()
 @Module({})
@@ -12,14 +12,14 @@ export class AMQPModule {
       providers: [
         {
           provide: AMQP_CONNECTION_OPTIONS,
-          useValue: options
+          useValue: options,
         },
-        createAMQPConnection()
+        createAMQPConnection(),
       ],
-      exports: [AMQP_CONNECTION]
-    };
+      exports: [AMQP_CONNECTION],
+    }
   }
-
+  
   static forRootAsync(options: AMQPAsyncConnectionOptions): DynamicModule {
     return {
       module: AMQPModule,
@@ -27,12 +27,12 @@ export class AMQPModule {
       providers: [
         {
           provide: AMQP_CONNECTION_OPTIONS,
-          useValue: options
+          useValue: options,
         },
         createAsyncAMQPConnectionOptions(options),
-        createAMQPConnection()
+        createAMQPConnection(),
       ],
-      exports: [AMQP_CONNECTION]
-    };
+      exports: [AMQP_CONNECTION],
+    }
   }
 }

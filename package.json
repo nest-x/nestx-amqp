@@ -51,6 +51,7 @@
     "@typescript-eslint/parser": "2.21.0",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.10.0",
+    "eslint-config-ts-lambdas": "1.0.3",
     "eslint-plugin-import": "2.20.1",
     "eslint-plugin-prettier": "3.1.2",
     "jest": "25.1.0",
@@ -68,24 +69,12 @@
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "extends": [
-      "plugin:@typescript-eslint/recommended",
-      "prettier/@typescript-eslint"
+      "eslint-config-ts-lambdas"
     ],
     "plugins": [
       "@typescript-eslint",
       "prettier"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 2018,
-      "sourceType": "module"
-    },
-    "rules": {
-      "@typescript-eslint/camelcase": "off",
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/explicit-member-accessibility": "off",
-      "@typescript-eslint/no-parameter-properties": "off",
-      "@typescript-eslint/interface-name-prefix": "off"
-    }
+    ]
   },
   "jest": {
     "moduleFileExtensions": [

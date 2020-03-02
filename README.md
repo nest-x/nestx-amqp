@@ -8,20 +8,22 @@
 
 Provide an `AMQP` connection as NestJS Module. Internally use [amqp-connection-manager](https://www.npmjs.com/package/amqp-connection-manager).
 
-
+<br/>
 
 ## Features
 
 - Provide an `AMQPModule` create `AMQPConnectionManager` async
 - Provide an injectable amqp connection manager at global
 
+<br/>
 
 ## Installation
 
-```shell script
+```shell
 yarn add nestx-amqp
 ```
 
+<br/>
 
 ## Examples
 
@@ -29,9 +31,8 @@ yarn add nestx-amqp
 
 
 ```typescript
-import { Module } from '@nestjs/common';
-import { AMQPModule } from 'nestx-amqp';
-
+import { Module } from '@nestjs/common'
+import { AMQPModule } from 'nestx-amqp'
 
 @Module({
   imports: [
@@ -44,9 +45,11 @@ import { AMQPModule } from 'nestx-amqp';
   controllers: [],
   providers: [],
 })
+
 export class AppModule {}
 ```
 
+<br/>
 
 ### Inject AMQPConnectionManager
 
@@ -88,3 +91,7 @@ export abstract class SimpleAbstractProducer implements OnModuleInit {
 }
 
 ```
+
+## LICENSE
+
+Released under [MIT License](./LICENSE).
