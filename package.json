@@ -23,6 +23,9 @@
     "test:cov": "jest --coverage --forceExit",
     "release": "semantic-release"
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
