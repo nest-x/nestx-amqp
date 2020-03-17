@@ -73,9 +73,15 @@
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "extends": [
+      "eslint-config-ts-lambdas",
+      "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended",
+      "prettier",
       "prettier/@typescript-eslint"
     ],
+    "env": {
+      "node": true
+    },
     "plugins": [
       "@typescript-eslint",
       "prettier"
