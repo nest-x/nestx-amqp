@@ -79,18 +79,16 @@
       "prettier",
       "prettier/@typescript-eslint"
     ],
-    "env": {
-      "node": true
-    },
     "plugins": [
       "@typescript-eslint",
       "prettier"
     ],
     "rules": {
       "semi": [
-        2,
+        "error",
         "never"
-      ]
+      ],
+      "prettier/prettier": "error"
     }
   },
   "jest": {

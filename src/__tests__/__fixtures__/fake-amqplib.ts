@@ -2,7 +2,6 @@ import * as _ from 'lodash'
 import * as sinon from 'sinon'
 import { EventEmitter } from 'events'
 
-
 export class FakeAMQP {
   private connection
   private url
@@ -37,13 +36,13 @@ export class FakeAMQP {
     this.url = null
     this.failConnections = false
     this.deadServers = []
-    this.connect = sinon.spy((url) => {
+    this.connect = sinon.spy(url => {
       if (this.failConnections) {
         return Promise.reject(new Error('No'))
       }
 
       let allowConnection = true
-      this.deadServers.forEach((deadUrl) => {
+      this.deadServers.forEach(deadUrl => {
         if (url.startsWith(deadUrl)) {
           allowConnection = false
         }
@@ -90,25 +89,45 @@ export class FakeConfirmChannel extends EventEmitter {
     this.close = sinon.spy(() => this.emit('close'))
   }
 
-  publish(): void {return}
+  publish(): void {
+    return
+  }
 
-  ack(): void {return}
+  ack(): void {
+    return
+  }
 
-  ackAll(): void {return}
+  ackAll(): void {
+    return
+  }
 
-  nack(): void {return}
+  nack(): void {
+    return
+  }
 
-  nackAll(): void {return}
+  nackAll(): void {
+    return
+  }
 
-  assertQueue(): void {return}
+  assertQueue(): void {
+    return
+  }
 
-  bindQueue(): void {return}
+  bindQueue(): void {
+    return
+  }
 
-  sendToQueue(): void {return}
+  sendToQueue(): void {
+    return
+  }
 
-  assertExchange(): void {return}
+  assertExchange(): void {
+    return
+  }
 
-  close(): void {return}
+  close(): void {
+    return
+  }
 }
 
 export class FakeConnection extends EventEmitter {
@@ -150,7 +169,7 @@ export class FakeAmqpConnectionManager extends EventEmitter {
     this.connected = true
     this.emit('connect', {
       connection: this._currentConnection,
-      url,
+      url
     })
   }
 
@@ -158,7 +177,7 @@ export class FakeAmqpConnectionManager extends EventEmitter {
     this._currentConnection = null
     this.connected = false
     this.emit('disconnect', {
-      err: new Error('Boom!'),
+      err: new Error('Boom!')
     })
   }
 }

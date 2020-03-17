@@ -1,7 +1,7 @@
 import * as amqp from 'amqp-connection-manager'
 import { ModuleMetadata } from '@nestjs/common/interfaces'
 
-export type AMQPConnectURLString = string;
+export type AMQPConnectURLString = string
 
 export interface AMQPConnectionOptions {
   urls: AMQPConnectURLString[]
