@@ -1,12 +1,12 @@
-import * as proxyquire from 'proxyquire';
-import { FakeAMQP } from './__fixtures__/fake-amqplib';
-import { Test, TestingModule } from '@nestjs/testing';
-import { AMQPModule } from '../amqp.module';
+import * as proxyquire from 'proxyquire'
+import { FakeAMQP } from './__fixtures__/fake-amqplib'
+import { Test, TestingModule } from '@nestjs/testing'
+import { AMQPModule } from '../amqp.module'
 
-const amqplib = new FakeAMQP();
+const amqplib = new FakeAMQP()
 proxyquire('amqp-connection-manager', {
   amqplib: amqplib
-});
+})
 
 describe('AMQP Module', () => {
   it('# should module define with sync connection options correctly', async () => {
@@ -16,17 +16,17 @@ describe('AMQP Module', () => {
           urls: ['amqp://devuser:devuser@localhost:5673']
         })
       ]
-    }).compile();
+    }).compile()
 
-    const app = module.createNestApplication();
-    await app.init();
+    const app = module.createNestApplication()
+    await app.init()
 
-    const amqpModule = module.get(AMQPModule);
+    const amqpModule = module.get(AMQPModule)
 
-    expect(amqpModule).toBeInstanceOf(AMQPModule);
+    expect(amqpModule).toBeInstanceOf(AMQPModule)
 
-    await app.close();
-  });
+    await app.close()
+  })
 
   it('# should module define with async connection options correctly', async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -37,15 +37,15 @@ describe('AMQP Module', () => {
           })
         })
       ]
-    }).compile();
+    }).compile()
 
-    const app = module.createNestApplication();
-    await app.init();
+    const app = module.createNestApplication()
+    await app.init()
 
-    const amqpModule = module.get(AMQPModule);
+    const amqpModule = module.get(AMQPModule)
 
-    expect(amqpModule).toBeInstanceOf(AMQPModule);
+    expect(amqpModule).toBeInstanceOf(AMQPModule)
 
-    await app.close();
-  });
-});
+    await app.close()
+  })
+})
