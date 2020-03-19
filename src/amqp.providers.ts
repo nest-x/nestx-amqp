@@ -3,7 +3,6 @@ import { AmqpConnectionManager } from 'amqp-connection-manager'
 import { AMQPAsyncConnectionOptions, AMQPConnectionOptions } from './amqp.options'
 import { AMQP_CONNECTION, AMQP_CONNECTION_OPTIONS } from './amqp.constants'
 import { FactoryProvider } from '@nestjs/common'
-// import exp = require('constants');
 
 export type ConnectionFactoryProvider = FactoryProvider<AmqpConnectionManager | Promise<AmqpConnectionManager>>
 export type ConnectionOptionsFactoryProvider = FactoryProvider<AMQPConnectionOptions | Promise<AMQPConnectionOptions>>
