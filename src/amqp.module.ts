@@ -58,7 +58,6 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
     const connection: amqp.AmqpConnectionManager = this.moduleRef.get(AMQP_CONNECTION)
 
     if (connection) {
-      console.log(`shutting down amqp connection`)
       await connection.close()
     }
   }

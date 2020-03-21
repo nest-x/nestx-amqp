@@ -5,13 +5,20 @@ on: [push, pull_request]
 jobs:
   ci:
     runs-on: ubuntu-latest
+    services:
+      rabbitmq:
+        image: rabbitmq:3-management
+        env:
+          RABBITMQ_DEFAULT_PASS: devuser
+          RABBITMQ_DEFAULT_USER: devuser
+    container:
+      image: node:lts
+      env:
+        CI: 'true'
+        RABBITMQ_URL: amqp://devuser:devuser@rabbitmq:5672
     steps:
       - name: SCM
         uses: actions/checkout@v2
-      - name: Setup Node Environment
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
       - name: Install Dependencies and Build
         run: |
           yarn
