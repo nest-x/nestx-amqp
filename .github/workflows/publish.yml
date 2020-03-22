@@ -18,11 +18,12 @@ jobs:
       - name: Install Dependencies and Build
         run: |
           sudo apt-get install gnupg
+          which gpg
+          which gpg2
           yarn
           yarn build
       - name: Semantic Release
         run: |
-          gpg --verison
           export GPG_TTY=$(tty)
           openssl aes-256-cbc -d -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in .github/git_gpg_keys.enc -out /tmp/git_gpg_keys.asc -d
           chmod 600 /tmp/git_gpg_keys.asc
