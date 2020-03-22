@@ -88,6 +88,8 @@ export abstract class SimpleAbstractProducer implements OnModuleInit {
 }
 ```
 
+<br/>
+
 ### Advanced Usage with Decorators
 
 > Currently, only support direct queue publish and subscribe
