@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/nest-x/nestx-amqp/compare/v1.0.6...v1.1.0) (2020-03-22)
+
+
+### Bug Fixes
+
+* resolve typo ([3b4a695](https://github.com/nest-x/nestx-amqp/commit/3b4a695379e56e00d065055a3bd542a8b20b75b5))
+
+
+### Features
+
+* **decorators:** add decorators support ([1e58742](https://github.com/nest-x/nestx-amqp/commit/1e5874279b4dbd8179aa5ffc2284b16c9ebc198f))
+
 ## [1.0.6](https://github.com/nest-x/nestx-amqp/compare/v1.0.5...v1.0.6) (2020-02-24)
 
 
