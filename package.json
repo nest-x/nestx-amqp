@@ -3,7 +3,7 @@
   "version": "2.0.0-0",
   "description": "nestjs x amqp-connection-manager module",
   "repository": "https://github.com/nest-x/nestx-amqp",
-  "author": "Aquariuslt <superaquariuslt@gmail.com>",
+  "author": "aquariuslt <superaquariuslt@gmail.com>",
   "license": "MIT",
   "keywords": [
     "nestjs",
