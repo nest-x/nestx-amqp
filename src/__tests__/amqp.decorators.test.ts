@@ -1,18 +1,19 @@
-import { Test, TestingModule } from '@nestjs/testing'
-import { Injectable } from '@nestjs/common'
-import { Options } from 'amqplib'
+import { Injectable } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import { Options } from 'amqplib';
+import { AMQP_TEST_URLS } from '../__tests__/__fixtures__/amqp.test.fixtures';
 import {
-  ConsumeOptions,
+  PUBLISH_QUEUE_OPTIONS_METADATA_TOKEN,
   SUBSCRIBE_QUEUE_CONSUME_OPTIONS_METADATA_TOKEN,
   SUBSCRIBE_QUEUE_METADATA_TOKEN,
   SUBSCRIBE_QUEUE_OPTIONS_METADATA_TOKEN
-} from '..'
-import { AMQP_TEST_URLS } from '../__tests__/__fixtures__/amqp.test.fixtures'
-import { PUBLISH_QUEUE_OPTIONS_METADATA_TOKEN } from '../amqp.constants'
-import { AMQPModule } from '../amqp.module'
-import { PublishQueue } from '../decorators/publish'
-import { SubscribeQueue } from '../decorators/subscribe'
-import { wait } from './__fixtures__/shared.utils'
+} from '../amqp.constants';
+import { AMQPModule } from '../amqp.module';
+import { PublishQueue } from '../decorators/publish';
+import { SubscribeQueue } from '../decorators/subscribe';
+import { ConsumeOptions } from '../services/consumer';
+
+import { wait } from './__fixtures__/shared.utils';
 
 describe('AMQP Decorators', () => {
   it('# should queue decorators works', async done => {
