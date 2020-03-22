@@ -1,6 +1,6 @@
 {
   "name": "nestx-amqp",
-  "version": "1.0.6",
+  "version": "2.0.0-0",
   "description": "nestjs x amqp-connection-manager module",
   "repository": "https://github.com/nest-x/nestx-amqp",
   "author": "Aquariuslt <superaquariuslt@gmail.com>",
@@ -28,10 +28,10 @@
     "index.ts"
   ],
   "dependencies": {
+    "@golevelup/nestjs-discovery": "^2.2.3",
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
-    "@golevelup/nestjs-discovery": "^2.2.3",
     "amqp-connection-manager": "^3.2.0",
     "amqplib": "^0.5.5",
     "patch-package": "^6.2.0",
