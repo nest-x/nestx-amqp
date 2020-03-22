@@ -18,18 +18,20 @@
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint \"src/**/*.ts\" --fix",
-    "test": "jest --forceExit",
+    "test": "jest --forceExit --detectOpenHandles",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage --forceExit",
+    "test:cov": "jest --coverage --forceExit --detectOpenHandles",
     "release": "semantic-release"
   },
   "files": [
-    "dist"
+    "dist",
+    "index.ts"
   ],
   "dependencies": {
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
+    "@golevelup/nestjs-discovery": "^2.2.3",
     "amqp-connection-manager": "^3.2.0",
     "amqplib": "^0.5.5",
     "patch-package": "^6.2.0",
@@ -60,7 +62,6 @@
     "jest": "25.1.0",
     "lodash": "4.17.15",
     "prettier": "2.0.1",
-    "proxyquire": "2.1.3",
     "semantic-release": "17.0.4",
     "sinon": "9.0.1",
     "supertest": "4.0.2",
@@ -88,7 +89,12 @@
         "error",
         "never"
       ],
-      "prettier/prettier": "error"
+      "prettier/prettier": "error",
+      "@typescript-eslint/camelcase": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/explicit-member-accessibility": "off",
+      "@typescript-eslint/no-parameter-properties": "off",
+      "@typescript-eslint/interface-name-prefix": "off"
     }
   },
   "jest": {
@@ -101,7 +107,7 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "<rootDir>/src/*.ts",
+      "<rootDir>/src/**/*.ts",
       "!<rootDir>/src/__tests__/**/*.ts",
       "!<rootDir>/src/shared/**/*.ts",
       "!<rootDir>/src/index.ts"
