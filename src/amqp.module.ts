@@ -7,10 +7,15 @@ import {
   AMQP_CONNECTION_OPTIONS,
   PUBLISH_QUEUE_METADATA_TOKEN,
   PUBLISH_QUEUE_OPTIONS_METADATA_TOKEN,
-  PUBLISH_QUEUE_PRODUCER_METADATA_TOKEN
+  PUBLISH_QUEUE_PRODUCER_METADATA_TOKEN,
+  SUBSCRIBE_QUEUE_CONSUME_OPTIONS_METADATA_TOKEN,
+  SUBSCRIBE_QUEUE_CONSUMER_METADATA_TOKEN,
+  SUBSCRIBE_QUEUE_METADATA_TOKEN,
+  SUBSCRIBE_QUEUE_OPTIONS_METADATA_TOKEN
 } from './amqp.constants'
 import { createAMQPConnection, createAsyncAMQPConnectionOptions } from './amqp.providers'
 import { AMQPAsyncConnectionOptions, AMQPConnectionOptions } from './amqp.options'
+import { Consumer } from './services/consumer'
 import { Producer } from './services/producer'
 
 @Global()
@@ -51,7 +56,8 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
   }
 
   async onModuleInit() {
-    await this.scanPublishQueueMethods()
+    await this.scanAndRegisterPublishQueueMethods()
+    await this.scanAndRegisterSubscribeQueueMethods()
   }
 
   async onModuleDestroy() {
@@ -62,7 +68,7 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
     }
   }
 
-  async scanPublishQueueMethods() {
+  async scanAndRegisterPublishQueueMethods() {
     const publishQueueMethods = await this.discover.providerMethodsWithMetaAtKey(PUBLISH_QUEUE_METADATA_TOKEN)
 
     const connection: amqp.AmqpConnectionManager = this.moduleRef.get(AMQP_CONNECTION)
@@ -75,6 +81,29 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
       const producer = new Producer(connection, queue, queueOptions)
       await producer.onModuleInit()
       Reflect.defineMetadata(PUBLISH_QUEUE_PRODUCER_METADATA_TOKEN, producer, originalHandler)
+    }
+  }
+
+  async scanAndRegisterSubscribeQueueMethods() {
+    const subscribeQueueMethods = await this.discover.providerMethodsWithMetaAtKey(SUBSCRIBE_QUEUE_METADATA_TOKEN)
+    const connection: amqp.AmqpConnectionManager = this.moduleRef.get(AMQP_CONNECTION)
+
+    for (const method of subscribeQueueMethods) {
+      const originHandler = method.discoveredMethod.handler
+
+      const queue = Reflect.getMetadata(SUBSCRIBE_QUEUE_METADATA_TOKEN, originHandler)
+      const queueOptions = Reflect.getMetadata(SUBSCRIBE_QUEUE_OPTIONS_METADATA_TOKEN, originHandler)
+      const consumeOptions = Reflect.getMetadata(SUBSCRIBE_QUEUE_CONSUME_OPTIONS_METADATA_TOKEN, originHandler)
+
+      const consumer = new Consumer(connection, queue, queueOptions, consumeOptions)
+
+      Reflect.defineMetadata(SUBSCRIBE_QUEUE_CONSUMER_METADATA_TOKEN, consumer, originHandler)
+
+      const handlerContext = method.discoveredMethod.parentClass.instance;
+
+      await consumer.applyHandler(originHandler)
+      await consumer.applyHandlerContext(handlerContext)
+      await consumer.listen()
     }
   }
 }

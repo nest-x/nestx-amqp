@@ -18,9 +18,9 @@
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint \"src/**/*.ts\" --fix",
-    "test": "jest --forceExit",
+    "test": "jest --forceExit --detectOpenHandles",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage --forceExit",
+    "test:cov": "jest --coverage --forceExit --detectOpenHandles",
     "release": "semantic-release"
   },
   "files": [
@@ -107,7 +107,7 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "<rootDir>/src/*.ts",
+      "<rootDir>/src/**/*.ts",
       "!<rootDir>/src/__tests__/**/*.ts",
       "!<rootDir>/src/shared/**/*.ts",
       "!<rootDir>/src/index.ts"
