@@ -21,7 +21,17 @@ jobs:
           yarn build
       - name: Semantic Release
         run: |
+          openssl aes-256-cbc -d -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in .github/git_gpg_key.enc -out /tmp/git_gpg_key.asc -d
+          chmod 600 /tmp/git_gpg_key.asc
+          gpg --batch --yes --import /tmp/git_gpg_keys.asc
+          echo '/usr/bin/gpg2 --passphrase ${GPG_PASSPHRASE} --batch --no-tty "$@"' > /tmp/gpg-with-passphrase && chmod +x /tmp/gpg-with-passphrase
+          git config gpg.program "/tmp/gpg-with-passphrase"
+          git config commit.gpgsign true
+          git config --global user.signingkey $GPG_KEY_ID
           yarn release
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          REPO_ENC_IV: ${{ secrets.REPO_ENC_IV }}
+          REPO_ENC_KEY: ${{ secrets.REPO_ENC_KEY }}
