@@ -37,12 +37,12 @@ import { AMQPModule } from 'nestx-amqp'
   imports: [
     AMQPModule.forRootAsync({
       useFactory: () => ({
-        urls: ['amqp://devuser:devuser@localhost:5672?heartbeat=60']
-      })
-    })
+        urls: ['amqp://devuser:devuser@localhost:5672?heartbeat=60'],
+      }),
+    }),
   ],
   controllers: [],
-  providers: []
+  providers: [],
 })
 export class AppModule {}
 ```
@@ -53,7 +53,7 @@ export class AppModule {}
 
 Use Symbol `AMQP_CONNECTION` for Injection:
 
-Below is a abstract producer code sample.
+Below is an abstract producer code sample.
 
 ```typescript
 import { Inject, OnModuleInit } from '@nestjs/common'
@@ -67,17 +67,15 @@ export abstract class SimpleAbstractProducer implements OnModuleInit {
   abstract getQueue(): string
   abstract getQueueOptions(): Options.AssertQueue
 
-  public constructor(
+  constructor(
     @Inject(AMQP_CONNECTION)
-    readonly connectionManager: amqp.AmqpConnectionManager
+    readonly connectionManager: amqp.AmqpConnectionManager,
   ) {}
 
   async onModuleInit() {
     this.channelWrapper = this.connectionManager.createChannel({
       json: true,
-      setup: channel => {
-        return channel.assertQueue(this.queue)
-      }
+      setup: channel => channel.assertQueue(this.queue),
     })
     await this.channelWrapper.waitForConnect()
   }
@@ -112,6 +110,7 @@ methodYouDefinedInService(content:any, options?: amqplib.Options.Publish){}
 ```typescript
 @Injectable()
 class TestMessageService {
+
   @PublishQueue(queue, queueOptions)
   async testPublishQueue(content, options?) {
     // do your post business-logic here
@@ -147,7 +146,7 @@ export type ConsumeOptions = BaseConsumeOptions & Partial<RetryOptions>
 
 **Example:**
 
-> (You must register and enable `AMQPModule`)
+> You must register and enable `AMQPModule`
 
 ```typescript
 @Injectable()
@@ -160,11 +159,13 @@ class TestMessageService {
   }
 }
 ```
+<br />
 
 ## Change Log
 
 See [CHANGELOG.md](./CHANGELOG.md)
 
+<br />
 
 ## LICENSE
 
