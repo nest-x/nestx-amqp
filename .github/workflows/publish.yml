@@ -28,6 +28,7 @@ jobs:
           git config gpg.program "/tmp/gpg-with-passphrase"
           git config commit.gpgsign true
           git config --global user.signingkey $GPG_KEY_ID
+          export GPG_TTY=$(tty)
           yarn release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
