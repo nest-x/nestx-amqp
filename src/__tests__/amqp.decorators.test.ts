@@ -12,7 +12,7 @@ import { PUBLISH_QUEUE_OPTIONS_METADATA_TOKEN } from '../amqp.constants'
 import { AMQPModule } from '../amqp.module'
 import { PublishQueue } from '../decorators/publish'
 import { SubscribeQueue } from '../decorators/subscribe'
-import { wait } from './__fixtures__/shared.utils';
+import { wait } from './__fixtures__/shared.utils'
 
 describe('AMQP Decorators', () => {
   it('# should queue decorators works', async done => {
@@ -157,7 +157,78 @@ describe('AMQP Decorators', () => {
 
     // sleep for consume
 
-    await wait(2000);
+    await wait(2000)
+    await app.close()
+    done()
+  })
+
+  it('# should consumeOptions#retry/retryAttempted logic works', async done => {
+    const queue = 'TEST.QUEUE'
+    const replyQueue = 'TEST.REPLY.QUEUE'
+    const exceptionQueue = 'TEST.EXCEPTION.QUEUE'
+
+    const queueOptions = undefined
+    const consumeOptions: ConsumeOptions = {
+      prefetch: 1,
+      maxAttempts: 3,
+      exceptionQueue: exceptionQueue
+    }
+
+    @Injectable()
+    class TestMessageService {
+      replyCount = 0
+      exceptionCount = 0
+
+      @PublishQueue(queue)
+      async testPublishQueue(content, options?) {}
+
+      @PublishQueue(replyQueue)
+      async testPublishReplyQueue(content) {
+        this.replyCount++
+      }
+
+      @SubscribeQueue(exceptionQueue)
+      async testSubscribeExceptionQueue(content, error) {
+        this.exceptionCount++
+      }
+
+      @SubscribeQueue(queue, queueOptions, consumeOptions)
+      async testSubscribeQueue(content) {
+        // sorry it always throws when content.id is undefined
+        if (!content.id) {
+          throw Error('no id in content')
+        }
+
+        this.testPublishReplyQueue({
+          ...content,
+          completed: true
+        })
+      }
+    }
+
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        AMQPModule.register({
+          urls: AMQP_TEST_URLS
+        })
+      ],
+      providers: [TestMessageService]
+    }).compile()
+    const app = module.createNestApplication()
+    await app.init()
+    const service = app.get(TestMessageService)
+
+    const successContent = { id: 'success' }
+    const failContent = {}
+
+    await service.testPublishQueue(successContent)
+    await service.testPublishQueue(failContent)
+
+    await wait(2000)
+
+    expect(service.replyCount).toEqual(1)
+    expect(service.exceptionCount).toEqual(1)
+
     await app.close()
     done()
   })

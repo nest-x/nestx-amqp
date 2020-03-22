@@ -1,10 +1,21 @@
 import * as amqp from 'amqp-connection-manager'
 import { OnModuleInit } from '@nestjs/common'
-import { Options } from 'amqplib'
+import { Message, Options } from 'amqplib'
 
-export interface ConsumeOptions {
-  prefetch: number
+export const RETRY_HEADERS = {
+  RETRY_ATTEMPTED: 'x-retry-attempted'
 }
+
+export interface RetryOptions {
+  maxAttempts: number
+}
+
+export interface BaseConsumeOptions {
+  prefetch: number
+  exceptionQueue?: string
+}
+
+export type ConsumeOptions = BaseConsumeOptions & Partial<RetryOptions>
 
 export class Consumer implements OnModuleInit {
   private $channel: amqp.ChannelWrapper
@@ -60,7 +71,21 @@ export class Consumer implements OnModuleInit {
     return handleFn.call(handlerContext, content)
   }
 
-  private async requeue(message, error) {
+  private async requeue(message: Message, error) {
+    // check if can retry?
+    const maxAttempts = this.consumeOptions.maxAttempts || 0
+    const retryAttempted = message.properties.headers[RETRY_HEADERS.RETRY_ATTEMPTED] || 0
+    const canRetry = maxAttempts > 0 && retryAttempted < maxAttempts
 
+    const content = JSON.parse(message.content.toString())
+
+    if (canRetry) {
+      const requeueHeaders = {
+        [RETRY_HEADERS.RETRY_ATTEMPTED]: retryAttempted + 1
+      }
+      await this.$channel.sendToQueue(this.queue, content, { headers: requeueHeaders })
+    } else if (this.consumeOptions.exceptionQueue) {
+      await this.$channel.sendToQueue(this.consumeOptions.exceptionQueue, content)
+    }
   }
 }

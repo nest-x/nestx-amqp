@@ -4,7 +4,7 @@ import { DiscoveryModule, DiscoveryService } from '@golevelup/nestjs-discovery'
 import { DynamicModule, Global, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common'
 import {
   AMQP_CONNECTION,
-  AMQP_CONNECTION_OPTIONS,
+  AMQP_CONNECTION_OPTIONS, PUBLISH_QUEUE_CONTEXT_METADATA_TOKEN,
   PUBLISH_QUEUE_METADATA_TOKEN,
   PUBLISH_QUEUE_OPTIONS_METADATA_TOKEN,
   PUBLISH_QUEUE_PRODUCER_METADATA_TOKEN,
@@ -12,7 +12,7 @@ import {
   SUBSCRIBE_QUEUE_CONSUMER_METADATA_TOKEN,
   SUBSCRIBE_QUEUE_METADATA_TOKEN,
   SUBSCRIBE_QUEUE_OPTIONS_METADATA_TOKEN
-} from './amqp.constants'
+} from './amqp.constants';
 import { createAMQPConnection, createAsyncAMQPConnectionOptions } from './amqp.providers'
 import { AMQPAsyncConnectionOptions, AMQPConnectionOptions } from './amqp.options'
 import { Consumer } from './services/consumer'
@@ -80,7 +80,12 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
 
       const producer = new Producer(connection, queue, queueOptions)
       await producer.onModuleInit()
+
+      const handlerContext = method.discoveredMethod.parentClass.instance;
+
       Reflect.defineMetadata(PUBLISH_QUEUE_PRODUCER_METADATA_TOKEN, producer, originalHandler)
+      Reflect.defineMetadata(PUBLISH_QUEUE_CONTEXT_METADATA_TOKEN, handlerContext, originalHandler)
+
     }
   }
 
