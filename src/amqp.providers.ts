@@ -1,4 +1,4 @@
-import * as amqp from 'amqp-connection-manager'
+import { connect } from 'amqp-connection-manager'
 import { AmqpConnectionManager } from 'amqp-connection-manager'
 import { AMQPAsyncConnectionOptions, AMQPConnectionOptions } from './amqp.options'
 import { AMQP_CONNECTION, AMQP_CONNECTION_OPTIONS } from './amqp.constants'
@@ -11,7 +11,7 @@ export const createAMQPConnection = (): ConnectionFactoryProvider => ({
   provide: AMQP_CONNECTION,
   inject: [AMQP_CONNECTION_OPTIONS],
   useFactory: async (args: AMQPConnectionOptions): Promise<AmqpConnectionManager> => {
-    return amqp.connect(args.urls, args.options)
+    return connect(args.urls, args.options)
   },
 })
 

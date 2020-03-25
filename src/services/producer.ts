@@ -1,12 +1,12 @@
-import * as amqp from 'amqp-connection-manager'
+import { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager'
 import { OnModuleInit } from '@nestjs/common'
 import { Options } from 'amqplib'
 
 export class Producer implements OnModuleInit {
-  private $channel: amqp.ChannelWrapper
+  private $channel: ChannelWrapper
 
   constructor(
-    readonly connection: amqp.AmqpConnectionManager,
+    readonly connection: AmqpConnectionManager,
     readonly queue: string,
     readonly queueOptions?: Options.AssertQueue
   ) {}

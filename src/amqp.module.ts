@@ -1,4 +1,4 @@
-import * as amqp from 'amqp-connection-manager'
+import { AmqpConnectionManager } from 'amqp-connection-manager'
 import { ModuleRef } from '@nestjs/core'
 import { DiscoveryModule, DiscoveryService } from '@golevelup/nestjs-discovery'
 import { DynamicModule, Global, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common'
@@ -62,7 +62,7 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
   }
 
   async onModuleDestroy() {
-    const connection: amqp.AmqpConnectionManager = this.moduleRef.get(AMQP_CONNECTION)
+    const connection: AmqpConnectionManager = this.moduleRef.get(AMQP_CONNECTION)
 
     if (connection) {
       await connection.close()
@@ -72,7 +72,7 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
   async scanAndRegisterPublishQueueMethods() {
     const publishQueueMethods = await this.discover.providerMethodsWithMetaAtKey(PUBLISH_QUEUE_METADATA_TOKEN)
 
-    const connection: amqp.AmqpConnectionManager = this.moduleRef.get(AMQP_CONNECTION)
+    const connection: AmqpConnectionManager = this.moduleRef.get(AMQP_CONNECTION)
 
     for (const method of publishQueueMethods) {
       const originalHandler = method.discoveredMethod.handler
@@ -91,7 +91,7 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
 
   async scanAndRegisterSubscribeQueueMethods() {
     const subscribeQueueMethods = await this.discover.providerMethodsWithMetaAtKey(SUBSCRIBE_QUEUE_METADATA_TOKEN)
-    const connection: amqp.AmqpConnectionManager = this.moduleRef.get(AMQP_CONNECTION)
+    const connection: AmqpConnectionManager = this.moduleRef.get(AMQP_CONNECTION)
 
     for (const method of subscribeQueueMethods) {
       const originHandler = method.discoveredMethod.handler

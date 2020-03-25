@@ -1,4 +1,4 @@
-import * as amqp from 'amqp-connection-manager'
+import { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager'
 import { OnModuleInit } from '@nestjs/common'
 import { Message, Options } from 'amqplib'
 
@@ -18,12 +18,12 @@ export interface BaseConsumeOptions {
 export type ConsumeOptions = BaseConsumeOptions & Partial<RetryOptions>
 
 export class Consumer implements OnModuleInit {
-  private $channel: amqp.ChannelWrapper
+  private $channel: ChannelWrapper
   private $handler: (content, consumeOptions?) => {}
   private $handlerContext
 
   constructor(
-    readonly connection: amqp.AmqpConnectionManager,
+    readonly connection: AmqpConnectionManager,
     readonly queue: string,
     readonly queueOptions?: Options.AssertQueue,
     readonly consumeOptions?: ConsumeOptions
