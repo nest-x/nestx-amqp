@@ -12,7 +12,7 @@ export const createAMQPConnection = (): ConnectionFactoryProvider => ({
   inject: [AMQP_CONNECTION_OPTIONS],
   useFactory: async (args: AMQPConnectionOptions): Promise<AmqpConnectionManager> => {
     return amqp.connect(args.urls, args.options)
-  }
+  },
 })
 
 export const createAsyncAMQPConnectionOptions = (
@@ -20,5 +20,5 @@ export const createAsyncAMQPConnectionOptions = (
 ): ConnectionOptionsFactoryProvider => ({
   provide: AMQP_CONNECTION_OPTIONS,
   inject: options.inject,
-  useFactory: options.useFactory
+  useFactory: options.useFactory,
 })
