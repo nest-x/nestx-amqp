@@ -3,7 +3,7 @@ import { OnModuleInit } from '@nestjs/common'
 import { Message, Options } from 'amqplib'
 
 export const RETRY_HEADERS = {
-  RETRY_ATTEMPTED: 'x-retry-attempted'
+  RETRY_ATTEMPTED: 'x-retry-attempted',
 }
 
 export interface RetryOptions {
@@ -32,23 +32,23 @@ export class Consumer implements OnModuleInit {
   async onModuleInit() {
     this.$channel = this.connection.createChannel({
       json: true,
-      setup: channel => {
+      setup: (channel) => {
         return Promise.all([
           channel.assertQueue(this.queue, this.queueOptions),
           channel.prefetch(this.consumeOptions ? this.consumeOptions.prefetch : 1),
-          channel.consume(this.queue, message => {
+          channel.consume(this.queue, (message) => {
             const content = JSON.parse(message.content.toString())
             this.handle(content)
               .then(() => {
                 channel.ack(message)
               })
-              .catch(error => {
+              .catch((error) => {
                 this.requeue(message, error)
                 channel.ack(message)
               })
-          })
+          }),
         ])
-      }
+      },
     })
     await this.$channel.waitForConnect()
   }
@@ -81,7 +81,7 @@ export class Consumer implements OnModuleInit {
 
     if (canRetry) {
       const requeueHeaders = {
-        [RETRY_HEADERS.RETRY_ATTEMPTED]: retryAttempted + 1
+        [RETRY_HEADERS.RETRY_ATTEMPTED]: retryAttempted + 1,
       }
       await this.$channel.sendToQueue(this.queue, content, { headers: requeueHeaders })
     } else if (this.consumeOptions.exceptionQueue) {

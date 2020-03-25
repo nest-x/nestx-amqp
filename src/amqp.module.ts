@@ -12,7 +12,7 @@ import {
   SUBSCRIBE_QUEUE_CONSUME_OPTIONS_METADATA_TOKEN,
   SUBSCRIBE_QUEUE_CONSUMER_METADATA_TOKEN,
   SUBSCRIBE_QUEUE_METADATA_TOKEN,
-  SUBSCRIBE_QUEUE_OPTIONS_METADATA_TOKEN
+  SUBSCRIBE_QUEUE_OPTIONS_METADATA_TOKEN,
 } from './amqp.constants'
 import { createAMQPConnection, createAsyncAMQPConnectionOptions } from './amqp.providers'
 import { AMQPAsyncConnectionOptions, AMQPConnectionOptions } from './amqp.options'
@@ -21,7 +21,7 @@ import { Producer } from './services/producer'
 
 @Global()
 @Module({
-  imports: [DiscoveryModule]
+  imports: [DiscoveryModule],
 })
 export class AMQPModule implements OnModuleInit, OnModuleDestroy {
   constructor(private readonly moduleRef: ModuleRef, private readonly discover: DiscoveryService) {}
@@ -32,11 +32,11 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
       providers: [
         {
           provide: AMQP_CONNECTION_OPTIONS,
-          useValue: options
+          useValue: options,
         },
-        createAMQPConnection()
+        createAMQPConnection(),
       ],
-      exports: [AMQP_CONNECTION]
+      exports: [AMQP_CONNECTION],
     }
   }
 
@@ -47,12 +47,12 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
       providers: [
         {
           provide: AMQP_CONNECTION_OPTIONS,
-          useValue: options
+          useValue: options,
         },
         createAsyncAMQPConnectionOptions(options),
-        createAMQPConnection()
+        createAMQPConnection(),
       ],
-      exports: [AMQP_CONNECTION]
+      exports: [AMQP_CONNECTION],
     }
   }
 

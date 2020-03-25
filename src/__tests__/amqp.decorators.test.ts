@@ -1,22 +1,22 @@
-import { Injectable } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
-import { Options } from 'amqplib';
-import { AMQP_TEST_URLS } from '../__tests__/__fixtures__/amqp.test.fixtures';
+import { Injectable } from '@nestjs/common'
+import { Test, TestingModule } from '@nestjs/testing'
+import { Options } from 'amqplib'
+import { AMQP_TEST_URLS } from '../__tests__/__fixtures__/amqp.test.fixtures'
 import {
   PUBLISH_QUEUE_OPTIONS_METADATA_TOKEN,
   SUBSCRIBE_QUEUE_CONSUME_OPTIONS_METADATA_TOKEN,
   SUBSCRIBE_QUEUE_METADATA_TOKEN,
-  SUBSCRIBE_QUEUE_OPTIONS_METADATA_TOKEN
-} from '../amqp.constants';
-import { AMQPModule } from '../amqp.module';
-import { PublishQueue } from '../decorators/publish';
-import { SubscribeQueue } from '../decorators/subscribe';
-import { ConsumeOptions } from '../services/consumer';
+  SUBSCRIBE_QUEUE_OPTIONS_METADATA_TOKEN,
+} from '../amqp.constants'
+import { AMQPModule } from '../amqp.module'
+import { PublishQueue } from '../decorators/publish'
+import { SubscribeQueue } from '../decorators/subscribe'
+import { ConsumeOptions } from '../services/consumer'
 
-import { wait } from './__fixtures__/shared.utils';
+import { wait } from './__fixtures__/shared.utils'
 
 describe('AMQP Decorators', () => {
-  it('# should queue decorators works', async done => {
+  it('# should queue decorators works', async (done) => {
     const queue = 'TEST.QUEUE'
 
     @Injectable()
@@ -31,10 +31,10 @@ describe('AMQP Decorators', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AMQPModule.register({
-          urls: AMQP_TEST_URLS
-        })
+          urls: AMQP_TEST_URLS,
+        }),
       ],
-      providers: [TestMessageService]
+      providers: [TestMessageService],
     }).compile()
 
     const app = module.createNestApplication()
@@ -46,10 +46,10 @@ describe('AMQP Decorators', () => {
     done()
   })
 
-  it('# publish queue options', async done => {
+  it('# publish queue options', async (done) => {
     const queue = 'TEST.QUEUE.WITH.OPTIONS'
     const queueOptions: Options.AssertQueue = {
-      maxPriority: 10
+      maxPriority: 10,
     }
 
     @Injectable()
@@ -61,10 +61,10 @@ describe('AMQP Decorators', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AMQPModule.register({
-          urls: AMQP_TEST_URLS
-        })
+          urls: AMQP_TEST_URLS,
+        }),
       ],
-      providers: [TestMessageService]
+      providers: [TestMessageService],
     }).compile()
 
     const app = module.createNestApplication()
@@ -79,13 +79,13 @@ describe('AMQP Decorators', () => {
     done()
   })
 
-  it('# consume queue options', async done => {
+  it('# consume queue options', async (done) => {
     const queue = 'TEST.REPLY.QUEUE.WITH.OPTIONS'
     const queueOptions: Options.AssertQueue = {
-      maxPriority: 9
+      maxPriority: 9,
     }
     const consumeOptions: ConsumeOptions = {
-      prefetch: 1
+      prefetch: 1,
     }
 
     @Injectable()
@@ -97,10 +97,10 @@ describe('AMQP Decorators', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AMQPModule.register({
-          urls: AMQP_TEST_URLS
-        })
+          urls: AMQP_TEST_URLS,
+        }),
       ],
-      providers: [TestMessageService]
+      providers: [TestMessageService],
     }).compile()
 
     const app = module.createNestApplication()
@@ -119,7 +119,7 @@ describe('AMQP Decorators', () => {
     done()
   })
 
-  it('# crossover - calling producer function in subscribe handler', async done => {
+  it('# crossover - calling producer function in subscribe handler', async (done) => {
     const queue = 'TEST.QUEUE'
     const replyQueue = 'TEST.REPLY.QUEUE'
 
@@ -135,7 +135,7 @@ describe('AMQP Decorators', () => {
       async testSubscribeQueue(content) {
         const replyContent = {
           ...content,
-          completed: true
+          completed: true,
         }
 
         await this.testPublishReplyQueue(replyContent)
@@ -145,10 +145,10 @@ describe('AMQP Decorators', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AMQPModule.register({
-          urls: AMQP_TEST_URLS
-        })
+          urls: AMQP_TEST_URLS,
+        }),
       ],
-      providers: [TestMessageService]
+      providers: [TestMessageService],
     }).compile()
 
     const app = module.createNestApplication()
@@ -163,7 +163,7 @@ describe('AMQP Decorators', () => {
     done()
   })
 
-  it('# should consumeOptions#retry/retryAttempted logic works', async done => {
+  it('# should consumeOptions#retry/retryAttempted logic works', async (done) => {
     const queue = 'TEST.QUEUE'
     const replyQueue = 'TEST.REPLY.QUEUE'
     const exceptionQueue = 'TEST.EXCEPTION.QUEUE'
@@ -172,7 +172,7 @@ describe('AMQP Decorators', () => {
     const consumeOptions: ConsumeOptions = {
       prefetch: 1,
       maxAttempts: 3,
-      exceptionQueue: exceptionQueue
+      exceptionQueue: exceptionQueue,
     }
 
     @Injectable()
@@ -202,7 +202,7 @@ describe('AMQP Decorators', () => {
 
         this.testPublishReplyQueue({
           ...content,
-          completed: true
+          completed: true,
         })
       }
     }
@@ -210,10 +210,10 @@ describe('AMQP Decorators', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AMQPModule.register({
-          urls: AMQP_TEST_URLS
-        })
+          urls: AMQP_TEST_URLS,
+        }),
       ],
-      providers: [TestMessageService]
+      providers: [TestMessageService],
     }).compile()
     const app = module.createNestApplication()
     await app.init()

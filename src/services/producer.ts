@@ -14,9 +14,9 @@ export class Producer implements OnModuleInit {
   async onModuleInit() {
     this.$channel = this.connection.createChannel({
       json: true,
-      setup: channel => {
+      setup: (channel) => {
         return channel.assertQueue(this.queue, this.queueOptions)
-      }
+      },
     })
     await this.$channel.waitForConnect()
   }

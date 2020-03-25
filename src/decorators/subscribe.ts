@@ -2,7 +2,7 @@ import { Options } from 'amqplib'
 import {
   SUBSCRIBE_QUEUE_CONSUME_OPTIONS_METADATA_TOKEN,
   SUBSCRIBE_QUEUE_METADATA_TOKEN,
-  SUBSCRIBE_QUEUE_OPTIONS_METADATA_TOKEN
+  SUBSCRIBE_QUEUE_OPTIONS_METADATA_TOKEN,
 } from '../amqp.constants'
 import { ConsumeOptions } from '../services/consumer'
 

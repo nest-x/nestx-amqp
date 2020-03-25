@@ -57,19 +57,19 @@ Below is an abstract producer code sample.
 
 ```typescript
 import { Inject, OnModuleInit } from '@nestjs/common'
-import { AMQP_CONNECTION } from 'nestx-amqp'
-import * as amqp from 'amqp-connection-manager'
+import { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager'
 import { Options } from 'amqplib'
+import { AMQP_CONNECTION } from 'nestx-amqp'
 
 export abstract class SimpleAbstractProducer implements OnModuleInit {
-  channelWrapper: amqp.ChannelWrapper
+  channelWrapper: ChannelWrapper
 
   abstract getQueue(): string
   abstract getQueueOptions(): Options.AssertQueue
 
   constructor(
     @Inject(AMQP_CONNECTION)
-    readonly connectionManager: amqp.AmqpConnectionManager,
+    readonly connectionManager: AmqpConnectionManager,
   ) {}
 
   async onModuleInit() {
