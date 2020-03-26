@@ -1,5 +1,6 @@
 import { connect } from 'amqp-connection-manager'
 import { AmqpConnectionManager } from 'amqp-connection-manager'
+import { AMQPContainer } from './amqp.container'
 import { AMQPAsyncConnectionOptions, AMQPConnectionOptions, AMQPConnectionOptionsFactory } from './amqp.options'
 import { AMQP_CONNECTION, AMQP_CONNECTION_OPTIONS } from './amqp.constants'
 import { FactoryProvider, Type } from '@nestjs/common'
@@ -13,7 +14,9 @@ export const createAMQPConnection = (name: string): ConnectionFactoryProvider =>
   inject: [getAMQPConnectionOptionsToken(name)],
   useFactory: async (args: AMQPConnectionOptions): Promise<AmqpConnectionManager> => {
     /* use name as key to get connection instance? */
-    return connect(args.urls, args.options)
+    const connection = connect(args.urls, args.options)
+    AMQPContainer.getInstance().set(name, connection)
+    return connection
   },
 })
 
