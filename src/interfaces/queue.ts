@@ -8,12 +8,19 @@ export interface Queue {
   options?: Options.AssertQueue
 }
 
-export interface PublishQueueOptions {
-  queue: Queue | string
-  options?: Options.Publish
-}
+export type PublishQueueOptions = Options.Publish
 
 export interface ConsumeQueueOptions {
   queue: Queue | string
   options?: Options.Consume
+}
+
+export const createOrGetQueue = (nameOrQueue: string | Queue): Queue => {
+  if (typeof nameOrQueue === 'string') {
+    return {
+      name: nameOrQueue,
+    }
+  }
+
+  return nameOrQueue as Queue
 }

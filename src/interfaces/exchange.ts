@@ -12,8 +12,7 @@ export interface Exchange {
  * @desc wrap amqp.Channel.publish(exchange: string, routingKey: string, content, options?: Publish): boolean
  *       as interface
  * */
-export interface PublishExchangeOptions  {
-  exchange: Exchange | string
+export interface PublishExchangeOptions {
   routingKey: string
   options?: Options.Publish
 }
