@@ -18,6 +18,7 @@ import { createAMQPConnection, createAsyncAMQPConnectionOptions } from './amqp.p
 import { AMQPAsyncConnectionOptions, AMQPConnectionOptions } from './amqp.options'
 import { Consumer } from './services/consumer'
 import { Producer } from './services/producer'
+import { getAMQPConnectionOptionsToken, getAMQPConnectionToken } from './shared/token.util'
 
 @Global()
 @Module({
@@ -31,12 +32,12 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
       module: AMQPModule,
       providers: [
         {
-          provide: AMQP_CONNECTION_OPTIONS,
+          provide: getAMQPConnectionOptionsToken(options.name),
           useValue: options,
         },
-        createAMQPConnection(),
+        createAMQPConnection(options.name),
       ],
-      exports: [AMQP_CONNECTION],
+      exports: [getAMQPConnectionToken(options.name)],
     }
   }
 
@@ -45,14 +46,10 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
       module: AMQPModule,
       imports: options.imports,
       providers: [
-        {
-          provide: AMQP_CONNECTION_OPTIONS,
-          useValue: options,
-        },
         createAsyncAMQPConnectionOptions(options),
-        createAMQPConnection(),
+        createAMQPConnection(options.name),
       ],
-      exports: [AMQP_CONNECTION],
+      exports: [getAMQPConnectionToken(options.name)],
     }
   }
 

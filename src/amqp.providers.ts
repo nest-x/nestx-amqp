@@ -1,24 +1,41 @@
 import { connect } from 'amqp-connection-manager'
 import { AmqpConnectionManager } from 'amqp-connection-manager'
-import { AMQPAsyncConnectionOptions, AMQPConnectionOptions } from './amqp.options'
+import { AMQPAsyncConnectionOptions, AMQPConnectionOptions, AMQPConnectionOptionsFactory } from './amqp.options'
 import { AMQP_CONNECTION, AMQP_CONNECTION_OPTIONS } from './amqp.constants'
-import { FactoryProvider } from '@nestjs/common'
+import { FactoryProvider, Type } from '@nestjs/common'
+import { getAMQPConnectionOptionsToken, getAMQPConnectionToken } from './shared/token.util'
 
 export type ConnectionFactoryProvider = FactoryProvider<AmqpConnectionManager | Promise<AmqpConnectionManager>>
 export type ConnectionOptionsFactoryProvider = FactoryProvider<AMQPConnectionOptions | Promise<AMQPConnectionOptions>>
 
-export const createAMQPConnection = (): ConnectionFactoryProvider => ({
-  provide: AMQP_CONNECTION,
-  inject: [AMQP_CONNECTION_OPTIONS],
+export const createAMQPConnection = (name: string): ConnectionFactoryProvider => ({
+  provide: getAMQPConnectionToken(name),
+  inject: [getAMQPConnectionOptionsToken(name)],
   useFactory: async (args: AMQPConnectionOptions): Promise<AmqpConnectionManager> => {
+    /* use name as key to get connection instance? */
     return connect(args.urls, args.options)
   },
 })
 
 export const createAsyncAMQPConnectionOptions = (
   options: AMQPAsyncConnectionOptions
-): ConnectionOptionsFactoryProvider => ({
-  provide: AMQP_CONNECTION_OPTIONS,
-  inject: options.inject,
-  useFactory: options.useFactory,
-})
+): ConnectionOptionsFactoryProvider => {
+  /* default using uniq symbol `AMQP_CONNECTION_OPTIONS` symbol as token */
+  if (options.useFactory) {
+    return {
+      provide: getAMQPConnectionOptionsToken(options.name),
+      inject: options.inject,
+      useFactory: options.useFactory,
+    }
+  }
+
+  const inject = [(options.useClass || options.useExisting) as Type<AMQPConnectionOptionsFactory>]
+
+  return {
+    provide: getAMQPConnectionOptionsToken(options.name),
+    inject: inject,
+    useFactory: async (connectionOptionsFactory: AMQPConnectionOptionsFactory) => {
+      return connectionOptionsFactory.createAMQPConnectionOptions()
+    },
+  }
+}
