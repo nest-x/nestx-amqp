@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/nest-x/nestx-amqp/compare/v1.1.0...v1.2.0) (2020-03-27)
+
+
+### Features
+
+* **multi-providers:** add multi-providers support ([#48](https://github.com/nest-x/nestx-amqp/issues/48)) ([58a2885](https://github.com/nest-x/nestx-amqp/commit/58a2885b31cdac67fe719de8132fad5c4e58f61a))
+
 # [1.1.0](https://github.com/nest-x/nestx-amqp/compare/v1.0.6...v1.1.0) (2020-03-22)
 
 
