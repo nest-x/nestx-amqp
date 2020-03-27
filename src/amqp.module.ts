@@ -1,42 +1,31 @@
-import { AmqpConnectionManager } from 'amqp-connection-manager'
+import { DiscoveryModule } from '@golevelup/nestjs-discovery'
 import { ModuleRef } from '@nestjs/core'
-import { DiscoveryModule, DiscoveryService } from '@golevelup/nestjs-discovery'
 import { DynamicModule, Global, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common'
-import {
-  AMQP_CONNECTION,
-  AMQP_CONNECTION_OPTIONS,
-  PUBLISH_QUEUE_CONTEXT_METADATA_TOKEN,
-  PUBLISH_QUEUE_METADATA_TOKEN,
-  PUBLISH_QUEUE_OPTIONS_METADATA_TOKEN,
-  PUBLISH_QUEUE_PRODUCER_METADATA_TOKEN,
-  SUBSCRIBE_QUEUE_CONSUME_OPTIONS_METADATA_TOKEN,
-  SUBSCRIBE_QUEUE_CONSUMER_METADATA_TOKEN,
-  SUBSCRIBE_QUEUE_METADATA_TOKEN,
-  SUBSCRIBE_QUEUE_OPTIONS_METADATA_TOKEN,
-} from './amqp.constants'
+import { AMQPContainer } from './amqp.container'
+import { AMQPExplorer } from './amqp.explorer'
+import { getAMQPConnectionOptionsToken, getAMQPConnectionToken } from './shared/token.util'
 import { createAMQPConnection, createAsyncAMQPConnectionOptions } from './amqp.providers'
 import { AMQPAsyncConnectionOptions, AMQPConnectionOptions } from './amqp.options'
-import { Consumer } from './services/consumer'
-import { Producer } from './services/producer'
 
 @Global()
 @Module({
   imports: [DiscoveryModule],
 })
 export class AMQPModule implements OnModuleInit, OnModuleDestroy {
-  constructor(private readonly moduleRef: ModuleRef, private readonly discover: DiscoveryService) {}
+  constructor(private readonly moduleRef: ModuleRef) {}
 
   static register(options: AMQPConnectionOptions): DynamicModule {
     return {
       module: AMQPModule,
       providers: [
+        AMQPExplorer,
         {
-          provide: AMQP_CONNECTION_OPTIONS,
+          provide: getAMQPConnectionOptionsToken(options.name),
           useValue: options,
         },
-        createAMQPConnection(),
+        createAMQPConnection(options.name),
       ],
-      exports: [AMQP_CONNECTION],
+      exports: [getAMQPConnectionToken(options.name)],
     }
   }
 
@@ -44,71 +33,14 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
     return {
       module: AMQPModule,
       imports: options.imports,
-      providers: [
-        {
-          provide: AMQP_CONNECTION_OPTIONS,
-          useValue: options,
-        },
-        createAsyncAMQPConnectionOptions(options),
-        createAMQPConnection(),
-      ],
-      exports: [AMQP_CONNECTION],
+      providers: [AMQPExplorer, createAsyncAMQPConnectionOptions(options), createAMQPConnection(options.name)],
+      exports: [getAMQPConnectionToken(options.name)],
     }
   }
 
-  async onModuleInit() {
-    await this.scanAndRegisterPublishQueueMethods()
-    await this.scanAndRegisterSubscribeQueueMethods()
-  }
+  async onModuleInit() {}
 
   async onModuleDestroy() {
-    const connection: AmqpConnectionManager = this.moduleRef.get(AMQP_CONNECTION)
-
-    if (connection) {
-      await connection.close()
-    }
-  }
-
-  async scanAndRegisterPublishQueueMethods() {
-    const publishQueueMethods = await this.discover.providerMethodsWithMetaAtKey(PUBLISH_QUEUE_METADATA_TOKEN)
-
-    const connection: AmqpConnectionManager = this.moduleRef.get(AMQP_CONNECTION)
-
-    for (const method of publishQueueMethods) {
-      const originalHandler = method.discoveredMethod.handler
-      const queue = Reflect.getMetadata(PUBLISH_QUEUE_METADATA_TOKEN, originalHandler)
-      const queueOptions = Reflect.getMetadata(PUBLISH_QUEUE_OPTIONS_METADATA_TOKEN, originalHandler)
-
-      const producer = new Producer(connection, queue, queueOptions)
-      await producer.onModuleInit()
-
-      const handlerContext = method.discoveredMethod.parentClass.instance
-
-      Reflect.defineMetadata(PUBLISH_QUEUE_PRODUCER_METADATA_TOKEN, producer, originalHandler)
-      Reflect.defineMetadata(PUBLISH_QUEUE_CONTEXT_METADATA_TOKEN, handlerContext, originalHandler)
-    }
-  }
-
-  async scanAndRegisterSubscribeQueueMethods() {
-    const subscribeQueueMethods = await this.discover.providerMethodsWithMetaAtKey(SUBSCRIBE_QUEUE_METADATA_TOKEN)
-    const connection: AmqpConnectionManager = this.moduleRef.get(AMQP_CONNECTION)
-
-    for (const method of subscribeQueueMethods) {
-      const originHandler = method.discoveredMethod.handler
-
-      const queue = Reflect.getMetadata(SUBSCRIBE_QUEUE_METADATA_TOKEN, originHandler)
-      const queueOptions = Reflect.getMetadata(SUBSCRIBE_QUEUE_OPTIONS_METADATA_TOKEN, originHandler)
-      const consumeOptions = Reflect.getMetadata(SUBSCRIBE_QUEUE_CONSUME_OPTIONS_METADATA_TOKEN, originHandler)
-
-      const consumer = new Consumer(connection, queue, queueOptions, consumeOptions)
-
-      Reflect.defineMetadata(SUBSCRIBE_QUEUE_CONSUMER_METADATA_TOKEN, consumer, originHandler)
-
-      const handlerContext = method.discoveredMethod.parentClass.instance
-
-      await consumer.applyHandler(originHandler)
-      await consumer.applyHandlerContext(handlerContext)
-      await consumer.listen()
-    }
+    await AMQPContainer.getInstance().clearAndShutdown()
   }
 }
