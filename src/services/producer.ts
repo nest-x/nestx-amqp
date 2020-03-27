@@ -1,27 +1,24 @@
 import { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager'
 import { OnModuleInit } from '@nestjs/common'
 import { Options } from 'amqplib'
+import { Queue } from '../interfaces/queue'
 
 export class Producer implements OnModuleInit {
   private $channel: ChannelWrapper
 
-  constructor(
-    readonly connection: AmqpConnectionManager,
-    readonly queue: string,
-    readonly queueOptions?: Options.AssertQueue
-  ) {}
+  constructor(readonly connection: AmqpConnectionManager, readonly queue: Queue) {}
 
   async onModuleInit() {
     this.$channel = this.connection.createChannel({
       json: true,
       setup: (channel) => {
-        return channel.assertQueue(this.queue, this.queueOptions)
+        return channel.assertQueue(this.queue.name, this.queue.options)
       },
     })
     await this.$channel.waitForConnect()
   }
 
   async send(message, options?: Options.Publish) {
-    await this.$channel.sendToQueue(this.queue, message, options)
+    await this.$channel.sendToQueue(this.queue.name, message, options)
   }
 }
