@@ -1,8 +1,9 @@
 import { AmqpConnectionManager } from 'amqp-connection-manager'
-import { ModuleRef } from '@nestjs/core'
-import { DiscoveryModule, DiscoveryService } from '@golevelup/nestjs-discovery'
+import { DiscoveryModule, DiscoveryService, ModuleRef } from '@nestjs/core'
 import { DynamicModule, Global, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common'
+import { AMQPMetadataAccessor } from './amqp-metadata.accessor'
 import { AMQPContainer } from './amqp.container'
+import { AMQPExplorer } from './amqp.explorer'
 import { getAMQPConnectionOptionsToken, getAMQPConnectionToken } from './shared/token.util'
 import { createAMQPConnection, createAsyncAMQPConnectionOptions } from './amqp.providers'
 import { AMQPAsyncConnectionOptions, AMQPConnectionOptions } from './amqp.options'
@@ -18,6 +19,8 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
     return {
       module: AMQPModule,
       providers: [
+        AMQPMetadataAccessor,
+        AMQPExplorer,
         {
           provide: getAMQPConnectionOptionsToken(options.name),
           useValue: options,
@@ -32,13 +35,17 @@ export class AMQPModule implements OnModuleInit, OnModuleDestroy {
     return {
       module: AMQPModule,
       imports: options.imports,
-      providers: [createAsyncAMQPConnectionOptions(options), createAMQPConnection(options.name)],
+      providers: [
+        AMQPMetadataAccessor,
+        AMQPExplorer,
+        createAsyncAMQPConnectionOptions(options),
+        createAMQPConnection(options.name),
+      ],
       exports: [getAMQPConnectionToken(options.name)],
     }
   }
 
-  async onModuleInit() {
-  }
+  async onModuleInit() {}
 
   async onModuleDestroy() {
     await AMQPContainer.getInstance().clearAndShutdown()

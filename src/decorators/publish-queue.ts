@@ -1,3 +1,4 @@
+import { SetMetadata } from '@nestjs/common'
 import {
   PUBLISH_QUEUE_CONTEXT_METADATA_TOKEN,
   PUBLISH_QUEUE_METADATA_TOKEN,
