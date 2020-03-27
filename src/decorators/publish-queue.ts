@@ -2,7 +2,7 @@ import { SetMetadata } from '@nestjs/common'
 import {
   PUBLISH_QUEUE_CONTEXT_METADATA_TOKEN,
   PUBLISH_QUEUE_METADATA_TOKEN,
-  PUBLISH_QUEUE_OPTIONS_METADATA_TOKEN,
+  PUBLISH_QUEUE_PRODUCE_OPTIONS_METADATA_TOKEN,
   PUBLISH_QUEUE_PRODUCER_METADATA_TOKEN,
 } from '../amqp.constants'
 import { createOrGetQueue, PublishQueueOptions, Queue } from '../interfaces/queue'
@@ -25,7 +25,7 @@ export function PublishQueue(nameOrQueue: string | Queue, options?: PublishQueue
     }
 
     Reflect.defineMetadata(PUBLISH_QUEUE_METADATA_TOKEN, queue, descriptor.value)
-    Reflect.defineMetadata(PUBLISH_QUEUE_OPTIONS_METADATA_TOKEN, options, descriptor.value)
+    Reflect.defineMetadata(PUBLISH_QUEUE_PRODUCE_OPTIONS_METADATA_TOKEN, options, descriptor.value)
 
     return descriptor
   }

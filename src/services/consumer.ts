@@ -1,29 +1,18 @@
 import { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager'
 import { OnModuleInit } from '@nestjs/common'
 import { Message, Options } from 'amqplib'
-import { Queue } from '../interfaces/queue'
-
-export const RETRY_HEADERS = {
-  RETRY_ATTEMPTED: 'x-retry-attempted',
-}
-
-export interface RetryOptions {
-  maxAttempts: number
-}
-
-export interface BaseConsumeOptions {
-  prefetch: number
-  exceptionQueue?: string
-}
-
-export type ConsumeOptions = BaseConsumeOptions & Partial<RetryOptions> & Options.Consume
+import { ConsumeQueueOptions, Queue, RETRY_HEADERS } from '../interfaces/queue'
 
 export class Consumer implements OnModuleInit {
   private $channel: ChannelWrapper
   private $handler: (content, consumeOptions?) => {}
   private $context
 
-  constructor(readonly connection: AmqpConnectionManager, readonly queue: Queue, readonly options?: ConsumeOptions) {}
+  constructor(
+    readonly connection: AmqpConnectionManager,
+    readonly queue: Queue,
+    readonly options?: ConsumeQueueOptions
+  ) {}
 
   async onModuleInit() {
     this.$channel = this.connection.createChannel({
@@ -32,7 +21,7 @@ export class Consumer implements OnModuleInit {
         return Promise.all([
           channel.assertQueue(this.queue.name, this.queue.options),
           channel.prefetch(this.options ? this.options.prefetch : 1),
-          channel.consume(this.queue, (message) => {
+          channel.consume(this.queue.name, (message) => {
             const content = JSON.parse(message.content.toString())
             this.handle(content)
               .then(() => {
@@ -83,7 +72,10 @@ export class Consumer implements OnModuleInit {
         headers: requeueHeaders,
       })
     } else if (this.options.exceptionQueue) {
-      await this.$channel.sendToQueue(this.options.exceptionQueue, content)
+      await this.$channel.sendToQueue(this.options.exceptionQueue, {
+        content: content,
+        error: error.toString(),
+      })
     }
   }
 }
