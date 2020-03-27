@@ -207,6 +207,8 @@ class AMQPLoggerService {
 }
 ```
 
+<br />
+
 for more details, you can refer unittest cases.
 
 ## Change Log
