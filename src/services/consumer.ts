@@ -1,32 +1,17 @@
 import { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager'
 import { OnModuleInit } from '@nestjs/common'
 import { Message, Options } from 'amqplib'
-
-export const RETRY_HEADERS = {
-  RETRY_ATTEMPTED: 'x-retry-attempted',
-}
-
-export interface RetryOptions {
-  maxAttempts: number
-}
-
-export interface BaseConsumeOptions {
-  prefetch: number
-  exceptionQueue?: string
-}
-
-export type ConsumeOptions = BaseConsumeOptions & Partial<RetryOptions>
+import { ConsumeQueueOptions, Queue, RETRY_HEADERS } from '../interfaces/queue'
 
 export class Consumer implements OnModuleInit {
   private $channel: ChannelWrapper
   private $handler: (content, consumeOptions?) => {}
-  private $handlerContext
+  private $context
 
   constructor(
     readonly connection: AmqpConnectionManager,
-    readonly queue: string,
-    readonly queueOptions?: Options.AssertQueue,
-    readonly consumeOptions?: ConsumeOptions
+    readonly queue: Queue,
+    readonly options?: ConsumeQueueOptions
   ) {}
 
   async onModuleInit() {
@@ -34,9 +19,9 @@ export class Consumer implements OnModuleInit {
       json: true,
       setup: (channel) => {
         return Promise.all([
-          channel.assertQueue(this.queue, this.queueOptions),
-          channel.prefetch(this.consumeOptions ? this.consumeOptions.prefetch : 1),
-          channel.consume(this.queue, (message) => {
+          channel.assertQueue(this.queue.name, this.queue.options),
+          channel.prefetch(this.options ? this.options.prefetch : 1),
+          channel.consume(this.queue.name, (message) => {
             const content = JSON.parse(message.content.toString())
             this.handle(content)
               .then(() => {
@@ -61,19 +46,19 @@ export class Consumer implements OnModuleInit {
     this.$handler = handler
   }
 
-  async applyHandlerContext(context) {
-    this.$handlerContext = context
+  async applyContext(context) {
+    this.$context = context
   }
 
   private async handle(content) {
     const handleFn = this.$handler
-    const handlerContext = this.$handlerContext
+    const handlerContext = this.$context
     return handleFn.call(handlerContext, content)
   }
 
   private async requeue(message: Message, error) {
-    // check if can retry?
-    const maxAttempts = this.consumeOptions.maxAttempts || 0
+    /* check if can retry? */
+    const maxAttempts = this.options.maxAttempts || 0
     const retryAttempted = message.properties.headers[RETRY_HEADERS.RETRY_ATTEMPTED] || 0
     const canRetry = maxAttempts > 0 && retryAttempted < maxAttempts
 
@@ -83,9 +68,14 @@ export class Consumer implements OnModuleInit {
       const requeueHeaders = {
         [RETRY_HEADERS.RETRY_ATTEMPTED]: retryAttempted + 1,
       }
-      await this.$channel.sendToQueue(this.queue, content, { headers: requeueHeaders })
-    } else if (this.consumeOptions.exceptionQueue) {
-      await this.$channel.sendToQueue(this.consumeOptions.exceptionQueue, content)
+      await this.$channel.sendToQueue(this.queue.name, content, {
+        headers: requeueHeaders,
+      })
+    } else if (this.options.exceptionQueue) {
+      await this.$channel.sendToQueue(this.options.exceptionQueue, {
+        content: content,
+        error: error.toString(),
+      })
     }
   }
 }

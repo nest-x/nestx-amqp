@@ -3,8 +3,12 @@ export * from './amqp.options'
 export * from './amqp.providers'
 export * from './amqp.module'
 
-export * from './decorators/publish'
-export * from './decorators/subscribe'
+export * from './decorators/publish-queue'
+export * from './decorators/subscribe-queue'
+export * from './decorators/inject-connection'
+
+export * from './interfaces/exchange'
+export * from './interfaces/queue'
 
 export * from './services/producer'
 export * from './services/consumer'
