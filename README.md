@@ -221,8 +221,8 @@ Provide a `MethodDecorator` easily publishing message to exchange
 **Options:**
 
 ```
-@PublishExchange(exchange: string | Queue, options?: PublishExchangeOptions)
-yourPublishQueueMethod(content:any, options?: PublishExchangeOptions){}
+@PublishExchange(exchange: string | Exchange, options?: PublishExchangeOptions)
+yourPublishExchangeMethod(content:any, options?: PublishExchangeOptions){}
 ```
 
 **Example:**
