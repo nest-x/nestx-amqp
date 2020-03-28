@@ -10,5 +10,5 @@ export * from './decorators/inject-connection'
 export * from './interfaces/exchange'
 export * from './interfaces/queue'
 
-export * from './services/producer'
+export * from './services/queueProducer'
 export * from './services/consumer'

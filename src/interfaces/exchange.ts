@@ -5,7 +5,8 @@ import { Options } from 'amqplib'
  * */
 export interface Exchange {
   name: string
-  options: Options.AssertExchange
+  type: string | 'direct' | 'fanout' | 'topic' | 'headers'
+  options?: Options.AssertExchange
 }
 
 /**
@@ -15,4 +16,15 @@ export interface Exchange {
 export interface PublishExchangeOptions {
   routingKey: string
   options?: Options.Publish
+}
+
+export const createOrGetExchange = (nameOrExchange: string | Exchange): Exchange => {
+  if (typeof nameOrExchange === 'string') {
+    return {
+      name: nameOrExchange,
+      type: 'direct',
+    }
+  }
+
+  return nameOrExchange as Exchange
 }

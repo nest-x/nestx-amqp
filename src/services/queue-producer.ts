@@ -3,7 +3,7 @@ import { OnModuleInit } from '@nestjs/common'
 import { Options } from 'amqplib'
 import { Queue } from '../interfaces/queue'
 
-export class Producer implements OnModuleInit {
+export class QueueProducer implements OnModuleInit {
   private $channel: ChannelWrapper
 
   constructor(readonly connection: AmqpConnectionManager, readonly queue: Queue) {}
@@ -18,7 +18,7 @@ export class Producer implements OnModuleInit {
     await this.$channel.waitForConnect()
   }
 
-  async send(message, options?: Options.Publish) {
-    await this.$channel.sendToQueue(this.queue.name, message, options)
+  async send(content, options?: Options.Publish) {
+    await this.$channel.sendToQueue(this.queue.name, content, options)
   }
 }

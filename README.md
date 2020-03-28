@@ -186,6 +186,52 @@ class TestMessageService {
 
 <br />
 
+### Interface `Exchange`
+
+```typescript
+import { Options } from 'amqplib'
+
+/**
+ * @desc simply wrap amqp exchange definitions as interface
+ * */
+export interface Exchange {
+  name: string
+  type: string | 'direct' | 'fanout' | 'topic' | 'headers'
+  options?: Options.AssertExchange
+}
+
+/**
+ * @desc wrap amqp.Channel.publish(exchange: string, routingKey: string, content, options?: Publish): boolean
+ *       as interface
+ * */
+export interface PublishExchangeOptions {
+  routingKey: string
+  options?: Options.Publish
+}
+```
+
+
+#### `@PublishExchange()`
+
+> Not Stable
+
+
+Provide a `MethodDecorator` easily publishing message to exchange
+
+**Options:**
+
+```
+@PublishExchange(exchange: string | Queue, options?: PublishExchangeOptions)
+yourPublishQueueMethod(content:any, options?: PublishExchangeOptions){}
+```
+
+**Example:**
+
+> No Example for stable usage, you can refer to unit test case (or submit PR)
+
+
+<br />
+
 #### `@UseAMQPConnection(name?:string)`
 
 Provide a `MethodDecorator` easily spec connection (when you register AMQPModule) with `@PublisQueue()` and `@SubscribeQueue`)
