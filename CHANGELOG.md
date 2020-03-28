@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/nest-x/nestx-amqp/compare/v1.2.0...v1.3.0) (2020-03-28)
+
+
+### Features
+
+* **exchange:** add decorator `@PublishExchange` ([#53](https://github.com/nest-x/nestx-amqp/issues/53)) ([02f6f91](https://github.com/nest-x/nestx-amqp/commit/02f6f9116d1483d95c0e8804d7470f1d4365bdb1)), closes [#52](https://github.com/nest-x/nestx-amqp/issues/52)
+
 # [1.2.0](https://github.com/nest-x/nestx-amqp/compare/v1.1.0...v1.2.0) (2020-03-27)
 
 
