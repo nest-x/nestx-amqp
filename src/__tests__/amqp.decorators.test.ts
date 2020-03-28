@@ -4,6 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { AMQP_CONNECTION, USE_AMQP_CONNECTION_TOKEN } from '../amqp.constants'
 import { AMQPModule } from '../amqp.module'
 import { UseAMQPConnection } from '../decorators/inject-connection'
+import { PublishExchange } from '../decorators/publish-exchange'
 import { PublishQueue } from '../decorators/publish-queue'
 import { SubscribeQueue } from '../decorators/subscribe-queue'
 import { ConsumeQueueOptions } from '../interfaces/queue'
@@ -76,6 +77,44 @@ describe('AMQP Decorators', () => {
     await service.testPublishQueue({ id: Date.now() })
 
     await wait(2000)
+    await app.close()
+    done()
+  })
+
+  it('# should use @PublishExchange decorator with default connection', async (done) => {
+    const exchange = ''
+    const routingKey = 'TEST.ROUTING.KEY'
+
+    @Injectable()
+    class TestPublishQueueService {
+      public consumed = 0
+
+      @PublishExchange(exchange, { routingKey })
+      async testPublishExchange(content) {}
+
+      @SubscribeQueue(routingKey)
+      async testSubscribeQueue(content) {
+        this.consumed++
+      }
+    }
+
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        AMQPModule.register({
+          urls: AMQP_TEST_URLS,
+        }),
+      ],
+      providers: [TestPublishQueueService],
+    }).compile()
+
+    const app = module.createNestApplication()
+    await app.init()
+
+    const service = app.get(TestPublishQueueService)
+    await service.testPublishExchange({ id: Date.now() })
+
+    await wait(2000)
+    expect(service.consumed).toEqual(1)
     await app.close()
     done()
   })

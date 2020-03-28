@@ -1,4 +1,5 @@
 import { Options } from 'amqplib'
+import { RetryOptions } from './common';
 
 /**
  * @desc simply wrap amqp queue definitions as interface
@@ -10,10 +11,6 @@ export interface Queue {
 
 export const RETRY_HEADERS = {
   RETRY_ATTEMPTED: 'x-retry-attempted',
-}
-
-export interface RetryOptions {
-  maxAttempts: number
 }
 
 export interface BaseConsumeOptions {

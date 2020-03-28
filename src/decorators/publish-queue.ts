@@ -1,4 +1,3 @@
-import { SetMetadata } from '@nestjs/common'
 import {
   PUBLISH_QUEUE_CONTEXT_METADATA_TOKEN,
   PUBLISH_QUEUE_METADATA_TOKEN,
@@ -6,7 +5,7 @@ import {
   PUBLISH_QUEUE_PRODUCER_METADATA_TOKEN,
 } from '../amqp.constants'
 import { createOrGetQueue, PublishQueueOptions, Queue } from '../interfaces/queue'
-import { Producer } from '../services/producer'
+import { QueueProducer } from '../services/queue-producer'
 
 export function PublishQueue(name: string, options?: PublishQueueOptions): MethodDecorator
 export function PublishQueue(queue: Queue, options?: PublishQueueOptions): MethodDecorator
@@ -15,13 +14,13 @@ export function PublishQueue(nameOrQueue: string | Queue, options?: PublishQueue
 
   return (target, propertyKey, descriptor: PropertyDescriptor) => {
     const originalHandler = descriptor.value
-    descriptor.value = async (content) => {
+    descriptor.value = async (content, ...elseArgs) => {
       const context = Reflect.getMetadata(PUBLISH_QUEUE_CONTEXT_METADATA_TOKEN, descriptor.value)
-      const producer: Producer = Reflect.getMetadata(PUBLISH_QUEUE_PRODUCER_METADATA_TOKEN, descriptor.value)
+      const producer: QueueProducer = Reflect.getMetadata(PUBLISH_QUEUE_PRODUCER_METADATA_TOKEN, descriptor.value)
       if (producer) {
         await producer.send(content, options)
       }
-      await originalHandler.call(context, content, options)
+      await originalHandler.call(context, content, ...elseArgs)
     }
 
     Reflect.defineMetadata(PUBLISH_QUEUE_METADATA_TOKEN, queue, descriptor.value)
