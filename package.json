@@ -130,7 +130,7 @@
           "assets": [
             {
               "label": "nestx-amqp-v${nextRelease.version} distribution",
-              "path": "dist/**/*"
+              "path": "dist"
             }
           ]
         }
