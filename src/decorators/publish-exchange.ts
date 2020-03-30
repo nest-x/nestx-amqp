@@ -22,9 +22,20 @@ export function PublishExchange(nameOrExchange: string | Exchange, options?: Pub
         await producer.send(content, options)
       }
       const result = originalHandler.call(context, content, ...elseArgs)
-      if (!options || !options.always) {
-        if (producer) {
-          await producer.send(content, options)
+      if (result && typeof result.then === 'function') {
+        return result.then(async (r) => {
+          if (!options || !options.always) {
+            if (producer) {
+              await producer.send(content, options)
+            }
+          }
+          return r
+        })
+      } else {
+        if (!options || !options.always) {
+          if (producer) {
+            await producer.send(content, options)
+          }
         }
       }
       return result
