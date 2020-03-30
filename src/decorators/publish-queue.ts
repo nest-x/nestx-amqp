@@ -17,10 +17,17 @@ export function PublishQueue(nameOrQueue: string | Queue, options?: PublishQueue
     descriptor.value = async (content, ...elseArgs) => {
       const context = Reflect.getMetadata(PUBLISH_QUEUE_CONTEXT_METADATA_TOKEN, descriptor.value)
       const producer: QueueProducer = Reflect.getMetadata(PUBLISH_QUEUE_PRODUCER_METADATA_TOKEN, descriptor.value)
-      if (producer) {
+
+      if (options && options.always && producer) {
         await producer.send(content, options)
       }
-      return originalHandler.call(context, content, ...elseArgs)
+      const result = originalHandler.call(context, content, ...elseArgs)
+      if (!options || !options.always) {
+        if (producer) {
+          await producer.send(content, options)
+        }
+      }
+      return result
     }
 
     Reflect.defineMetadata(PUBLISH_QUEUE_METADATA_TOKEN, queue, descriptor.value)

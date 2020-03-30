@@ -1,5 +1,5 @@
 import { Options } from 'amqplib'
-import { RetryOptions } from './common';
+import { RetryOptions } from './common'
 
 /**
  * @desc simply wrap amqp queue definitions as interface
@@ -18,7 +18,7 @@ export interface BaseConsumeOptions {
   exceptionQueue?: string
 }
 
-export type PublishQueueOptions = Options.Publish
+export type PublishQueueOptions = Options.Publish & { always?: boolean }
 export type ConsumeQueueOptions = BaseConsumeOptions & Partial<RetryOptions> & Options.Consume
 
 export const createOrGetQueue = (nameOrQueue: string | Queue): Queue => {

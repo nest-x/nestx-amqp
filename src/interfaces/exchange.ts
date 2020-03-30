@@ -15,6 +15,7 @@ export interface Exchange {
  * */
 export interface PublishExchangeOptions {
   routingKey: string
+  always?: boolean
   options?: Options.Publish
 }
 

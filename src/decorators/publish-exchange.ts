@@ -18,10 +18,16 @@ export function PublishExchange(nameOrExchange: string | Exchange, options?: Pub
       const context = Reflect.getMetadata(PUBLISH_EXCHANGE_CONTEXT_METADATA_TOKEN, descriptor.value)
       const producer: ExchangeProducer = Reflect.getMetadata(PUBLISH_EXCHANGE_PRODUCER_METADATA_TOKEN, descriptor.value)
 
-      if (producer) {
+      if (options && options.always && producer) {
         await producer.send(content, options)
       }
-      return originalHandler.call(context, content, ...elseArgs)
+      const result = originalHandler.call(context, content, ...elseArgs)
+      if (!options || !options.always) {
+        if (producer) {
+          await producer.send(content, options)
+        }
+      }
+      return result
     }
 
     Reflect.defineMetadata(PUBLISH_EXCHANGE_METADATA_TOKEN, exchange, descriptor.value)
