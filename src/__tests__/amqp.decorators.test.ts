@@ -44,6 +44,43 @@ describe('AMQP Decorators', () => {
     done()
   })
 
+  it('# should use @PublishQueue decorator and keep return value', async (done) => {
+    const queue = 'TEST.QUEUE.WITH.RETURN.VALUE'
+    const returnValue = 2
+
+    @Injectable()
+    class TestPublishQueueService {
+      @PublishQueue(queue)
+      async testPublishQueue(content) {
+        return returnValue
+      }
+
+      @SubscribeQueue(queue)
+      async testSubscribeQueue(content) {}
+    }
+
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        AMQPModule.register({
+          urls: AMQP_TEST_URLS,
+        }),
+      ],
+      providers: [TestPublishQueueService],
+    }).compile()
+
+    const app = module.createNestApplication()
+    await app.init()
+
+    const service = app.get(TestPublishQueueService)
+    const result = await service.testPublishQueue({ id: Date.now() })
+
+    expect(result).toEqual(returnValue)
+
+    await wait(2000)
+    await app.close()
+    done()
+  })
+
   it('# should use @PublishQueue with named connection', async (done) => {
     const queue = {
       name: 'TEST.QUEUE',
