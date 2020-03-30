@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/nest-x/nestx-amqp/compare/v1.3.0...v1.3.1) (2020-03-30)
+
+
+### Bug Fixes
+
+* PublishQueue don't return a value ([36fcf1c](https://github.com/nest-x/nestx-amqp/commit/36fcf1cde9af8482e3ab388c51c13c211fd92608))
+
 # [1.3.0](https://github.com/nest-x/nestx-amqp/compare/v1.2.0...v1.3.0) (2020-03-28)
 
 
