@@ -20,7 +20,7 @@ export function PublishQueue(nameOrQueue: string | Queue, options?: PublishQueue
       if (producer) {
         await producer.send(content, options)
       }
-      await originalHandler.call(context, content, ...elseArgs)
+      return originalHandler.call(context, content, ...elseArgs)
     }
 
     Reflect.defineMetadata(PUBLISH_QUEUE_METADATA_TOKEN, queue, descriptor.value)
