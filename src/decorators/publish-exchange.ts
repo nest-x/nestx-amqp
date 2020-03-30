@@ -21,7 +21,7 @@ export function PublishExchange(nameOrExchange: string | Exchange, options?: Pub
       if (producer) {
         await producer.send(content, options)
       }
-      await originalHandler.call(context, content, ...elseArgs)
+      return originalHandler.call(context, content, ...elseArgs)
     }
 
     Reflect.defineMetadata(PUBLISH_EXCHANGE_METADATA_TOKEN, exchange, descriptor.value)
