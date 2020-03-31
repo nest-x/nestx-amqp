@@ -85,6 +85,49 @@ export abstract class SimpleAbstractProducer implements OnModuleInit {
   }
 }
 ```
+Below is an consumer code sample
+```typescript
+import { AMQP_CONNECTION } from 'nestx-amqp';
+import { Injectable, OnModuleInit, Inject } from '@nestjs/common';
+import { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager';
+import { ConfirmChannel } from 'amqplib';
+import { SectionMasterService } from './section-master.service';
+import { ConsumeMessage } from 'amqplib';
+
+@Injectable()
+export class SectionMasterConsumer implements OnModuleInit {
+  channel: ChannelWrapper;
+  constructor(
+    @Inject(AMQP_CONNECTION)
+    readonly connectionManager: AmqpConnectionManager,
+    private service: SectionMasterService,
+  ) {}
+
+  async onModuleInit() {
+    this.channel = this.connectionManager.createChannel({
+      json: true,
+      setup: async (channel: ConfirmChannel) => {
+        const exchange = await channel.assertExchange('user', 'topic', {
+          durable: false,
+        });
+        const queue = await channel.assertQueue('', {
+          exclusive: true,
+        });
+        await channel.bindQueue(queue.queue, exchange.exchange, 'admin.created');
+        await channel.consume(queue.queue, this.createSectionMaster4Admin.bind(this));
+      },
+    });
+    await this.channel.waitForConnect();
+  }
+
+  async createSectionMaster4Admin(context: ConsumeMessage) {
+    const user = JSON.parse(context.content.toString());
+    // do something
+  }
+}
+
+
+```
 
 <br/>
 
