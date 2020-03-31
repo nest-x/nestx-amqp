@@ -23,22 +23,18 @@ export function PublishExchange(nameOrExchange: string | Exchange, options?: Pub
       }
       const result = originalHandler.call(context, content, ...elseArgs)
       if (result && typeof result.then === 'function') {
-        return result.then(async (r) => {
-          if (!options || !options.always) {
-            if (producer) {
-              await producer.send(content, options)
-            }
+        return result.then(async (r: any) => {
+          if ((!options || !options.always) && producer) {
+            await producer.send(content, options)
           }
           return r
         })
       } else {
-        if (!options || !options.always) {
-          if (producer) {
-            await producer.send(content, options)
-          }
+        if ((!options || !options.always) && producer) {
+          await producer.send(content, options)
         }
+        return result
       }
-      return result
     }
 
     Reflect.defineMetadata(PUBLISH_EXCHANGE_METADATA_TOKEN, exchange, descriptor.value)
