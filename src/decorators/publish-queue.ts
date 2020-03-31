@@ -14,14 +14,14 @@ export function PublishQueue(nameOrQueue: string | Queue, options?: PublishQueue
 
   return (target, propertyKey, descriptor: PropertyDescriptor) => {
     const originalHandler = descriptor.value
-    descriptor.value = async (content, ...elseArgs) => {
+    descriptor.value = async (...content: any[]) => {
       const context = Reflect.getMetadata(PUBLISH_QUEUE_CONTEXT_METADATA_TOKEN, descriptor.value)
       const producer: QueueProducer = Reflect.getMetadata(PUBLISH_QUEUE_PRODUCER_METADATA_TOKEN, descriptor.value)
 
       if (options && options.always && producer) {
         await producer.send(content, options)
       }
-      const result = originalHandler.call(context, content, ...elseArgs)
+      const result = originalHandler.call(context, content)
       if (result && typeof result.then === 'function') {
         return result.then(async (r: any) => {
           if ((!options || !options.always) && producer) {

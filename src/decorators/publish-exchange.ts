@@ -14,14 +14,14 @@ export function PublishExchange(nameOrExchange: string | Exchange, options?: Pub
 
   return (target, propertyKey, descriptor: PropertyDescriptor) => {
     const originalHandler = descriptor.value
-    descriptor.value = async (content, ...elseArgs) => {
+    descriptor.value = async (...content: any[]) => {
       const context = Reflect.getMetadata(PUBLISH_EXCHANGE_CONTEXT_METADATA_TOKEN, descriptor.value)
       const producer: ExchangeProducer = Reflect.getMetadata(PUBLISH_EXCHANGE_PRODUCER_METADATA_TOKEN, descriptor.value)
 
       if (options && options.always && producer) {
         await producer.send(content, options)
       }
-      const result = originalHandler.call(context, content, ...elseArgs)
+      const result = originalHandler.call(context, content)
       if (result && typeof result.then === 'function') {
         return result.then(async (r: any) => {
           if ((!options || !options.always) && producer) {
