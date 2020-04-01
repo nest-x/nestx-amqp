@@ -18,7 +18,12 @@ export interface PublishExchangeOptions {
   always?: boolean
   options?: Options.Publish
 }
-
+export interface ConsumeExchangeOptions {
+  name: string
+  type: string | 'direct' | 'fanout' | 'topic' | 'headers'
+  routingKey: string
+  options?: Options.AssertExchange
+}
 export const createOrGetExchange = (nameOrExchange: string | Exchange): Exchange => {
   if (typeof nameOrExchange === 'string') {
     return {

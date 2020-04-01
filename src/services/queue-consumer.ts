@@ -3,7 +3,7 @@ import { OnModuleInit } from '@nestjs/common'
 import { Message, Options } from 'amqplib'
 import { ConsumeQueueOptions, Queue, RETRY_HEADERS } from '../interfaces/queue'
 
-export class Consumer implements OnModuleInit {
+export class QueueConsumer implements OnModuleInit {
   private $channel: ChannelWrapper
   private $handler: (content, consumeOptions?) => {}
   private $context

@@ -14,13 +14,18 @@ import {
   SUBSCRIBE_QUEUE_CONTEXT_METADATA_TOKEN,
   SUBSCRIBE_QUEUE_METADATA_TOKEN,
   USE_AMQP_CONNECTION_TOKEN,
+  SUBSCRIBE_EXCHANGE_CONSUMER_METADATA_TOKEN,
+  SUBSCRIBE_EXCHANGE_CONTEXT_METADATA_TOKEN,
+  SUBSCRIBE_EXCHANGE_OPTIONS_METADATA_TOKEN,
+  SUBSCRIBE_EXCHANGE_QUEUE_OPTIONS_METADATA_TOKEN,
 } from './amqp.constants'
-import { Exchange } from './interfaces/exchange'
+import { Exchange, ConsumeExchangeOptions } from './interfaces/exchange'
 import { ConsumeQueueOptions, Queue } from './interfaces/queue'
-import { Consumer } from './services/consumer'
+import { QueueConsumer } from './services/queue-consumer'
 import { ExchangeProducer } from './services/exchange-producer'
 import { QueueProducer } from './services/queue-producer'
 import { getAMQPConnectionToken } from './shared/token.util'
+import { ExchangeConsumer } from './services/exchange-consumer'
 
 @Injectable()
 export class AMQPExplorer implements OnModuleInit {
@@ -36,6 +41,7 @@ export class AMQPExplorer implements OnModuleInit {
     await this.registerPublishQueueMethods()
     await this.registerPublishExchangeMethods()
     await this.registerSubscribeQueueMethods()
+    await this.registerSubscribeExchangeMethods()
   }
 
   /**
@@ -113,7 +119,7 @@ export class AMQPExplorer implements OnModuleInit {
 
       const handlerContext = method.discoveredMethod.parentClass.instance
 
-      const consumer = new Consumer(connection, queue, consumeOptions)
+      const consumer = new QueueConsumer(connection, queue, consumeOptions)
 
       await consumer.applyHandler(originalHandler)
       await consumer.applyContext(handlerContext)
@@ -123,6 +129,43 @@ export class AMQPExplorer implements OnModuleInit {
 
       this.logger.log(
         `Found ${method.discoveredMethod.parentClass.name}#${method.discoveredMethod.methodName} using @SubscribeQueue()`
+      )
+      await consumer.listen()
+    }
+  }
+
+  private async registerSubscribeExchangeMethods() {
+    const subscribeExchangeMethods = await this.discoveryService.providerMethodsWithMetaAtKey(
+      SUBSCRIBE_EXCHANGE_OPTIONS_METADATA_TOKEN
+    )
+    for (const method of subscribeExchangeMethods) {
+      const originalHandler = method.discoveredMethod.handler
+
+      const connectionName = Reflect.getMetadata(USE_AMQP_CONNECTION_TOKEN, originalHandler)
+      const injectConnectionToken = getAMQPConnectionToken(connectionName)
+      const connection: AmqpConnectionManager = this.moduleRef.get<AmqpConnectionManager>(injectConnectionToken)
+
+      const queueOptions: ConsumeQueueOptions = Reflect.getMetadata(
+        SUBSCRIBE_EXCHANGE_QUEUE_OPTIONS_METADATA_TOKEN,
+        originalHandler
+      )
+      const exchangeOptions: ConsumeExchangeOptions = Reflect.getMetadata(
+        SUBSCRIBE_EXCHANGE_OPTIONS_METADATA_TOKEN,
+        originalHandler
+      )
+
+      const handlerContext = method.discoveredMethod.parentClass.instance
+
+      const consumer = new ExchangeConsumer(connection, exchangeOptions, queueOptions)
+
+      await consumer.applyHandler(originalHandler)
+      await consumer.applyContext(handlerContext)
+
+      Reflect.defineMetadata(SUBSCRIBE_EXCHANGE_CONSUMER_METADATA_TOKEN, consumer, originalHandler)
+      Reflect.defineMetadata(SUBSCRIBE_EXCHANGE_CONTEXT_METADATA_TOKEN, handlerContext, originalHandler)
+
+      this.logger.log(
+        `Found ${method.discoveredMethod.parentClass.name}#${method.discoveredMethod.methodName} using @SubscribeExchange()`
       )
       await consumer.listen()
     }
