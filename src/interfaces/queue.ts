@@ -1,32 +1,32 @@
-import { Options } from 'amqplib'
+import { Options } from 'amqplib';
 import { RetryOptions } from './common';
 
 /**
  * @desc simply wrap amqp queue definitions as interface
  * */
 export interface Queue {
-  name: string
-  options?: Options.AssertQueue
+  name: string;
+  options?: Options.AssertQueue;
 }
 
 export const RETRY_HEADERS = {
-  RETRY_ATTEMPTED: 'x-retry-attempted',
-}
+  RETRY_ATTEMPTED: 'x-retry-attempted'
+};
 
 export interface BaseConsumeOptions {
-  prefetch: number
-  exceptionQueue?: string
+  prefetch: number;
+  exceptionQueue?: string;
 }
 
-export type PublishQueueOptions = Options.Publish
-export type ConsumeQueueOptions = BaseConsumeOptions & Partial<RetryOptions> & Options.Consume
+export type PublishQueueOptions = Options.Publish;
+export type ConsumeQueueOptions = BaseConsumeOptions & Partial<RetryOptions> & Options.Consume;
 
 export const createOrGetQueue = (nameOrQueue: string | Queue): Queue => {
   if (typeof nameOrQueue === 'string') {
     return {
-      name: nameOrQueue,
-    }
+      name: nameOrQueue
+    };
   }
 
-  return nameOrQueue as Queue
-}
+  return nameOrQueue as Queue;
+};

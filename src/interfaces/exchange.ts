@@ -1,12 +1,12 @@
-import { Options } from 'amqplib'
+import { Options } from 'amqplib';
 
 /**
  * @desc simply wrap amqp exchange definitions as interface
  * */
 export interface Exchange {
-  name: string
-  type: string | 'direct' | 'fanout' | 'topic' | 'headers'
-  options?: Options.AssertExchange
+  name: string;
+  type: string | 'direct' | 'fanout' | 'topic' | 'headers';
+  options?: Options.AssertExchange;
 }
 
 /**
@@ -14,17 +14,17 @@ export interface Exchange {
  *       as interface
  * */
 export interface PublishExchangeOptions {
-  routingKey: string
-  options?: Options.Publish
+  routingKey: string;
+  options?: Options.Publish;
 }
 
 export const createOrGetExchange = (nameOrExchange: string | Exchange): Exchange => {
   if (typeof nameOrExchange === 'string') {
     return {
       name: nameOrExchange,
-      type: 'direct',
-    }
+      type: 'direct'
+    };
   }
 
-  return nameOrExchange as Exchange
-}
+  return nameOrExchange as Exchange;
+};

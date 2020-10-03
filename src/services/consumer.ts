@@ -1,12 +1,12 @@
-import { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager'
-import { OnModuleInit } from '@nestjs/common'
-import { Message, Options } from 'amqplib'
-import { ConsumeQueueOptions, Queue, RETRY_HEADERS } from '../interfaces/queue'
+import { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager';
+import { OnModuleInit } from '@nestjs/common';
+import { Message, Options } from 'amqplib';
+import { ConsumeQueueOptions, Queue, RETRY_HEADERS } from '../interfaces/queue';
 
 export class Consumer implements OnModuleInit {
-  private $channel: ChannelWrapper
-  private $handler: (content, consumeOptions?) => {}
-  private $context
+  private $channel: ChannelWrapper;
+  private $handler: (content, consumeOptions?) => {};
+  private $context;
 
   constructor(
     readonly connection: AmqpConnectionManager,
@@ -22,60 +22,60 @@ export class Consumer implements OnModuleInit {
           channel.assertQueue(this.queue.name, this.queue.options),
           channel.prefetch(this.options ? this.options.prefetch : 1),
           channel.consume(this.queue.name, (message) => {
-            const content = JSON.parse(message.content.toString())
+            const content = JSON.parse(message.content.toString());
             this.handle(content)
               .then(() => {
-                channel.ack(message)
+                channel.ack(message);
               })
               .catch((error) => {
-                this.requeue(message, error)
-                channel.ack(message)
-              })
-          }),
-        ])
-      },
-    })
-    await this.$channel.waitForConnect()
+                this.requeue(message, error);
+                channel.ack(message);
+              });
+          })
+        ]);
+      }
+    });
+    await this.$channel.waitForConnect();
   }
 
   async listen() {
-    await this.onModuleInit()
+    await this.onModuleInit();
   }
 
   async applyHandler(handler: (content) => {}) {
-    this.$handler = handler
+    this.$handler = handler;
   }
 
   async applyContext(context) {
-    this.$context = context
+    this.$context = context;
   }
 
   private async handle(content) {
-    const handleFn = this.$handler
-    const handlerContext = this.$context
-    return handleFn.call(handlerContext, content)
+    const handleFn = this.$handler;
+    const handlerContext = this.$context;
+    return handleFn.call(handlerContext, content);
   }
 
   private async requeue(message: Message, error) {
     /* check if can retry? */
-    const maxAttempts = this.options.maxAttempts || 0
-    const retryAttempted = message.properties.headers[RETRY_HEADERS.RETRY_ATTEMPTED] || 0
-    const canRetry = maxAttempts > 0 && retryAttempted < maxAttempts
+    const maxAttempts = this.options.maxAttempts || 0;
+    const retryAttempted = message.properties.headers[RETRY_HEADERS.RETRY_ATTEMPTED] || 0;
+    const canRetry = maxAttempts > 0 && retryAttempted < maxAttempts;
 
-    const content = JSON.parse(message.content.toString())
+    const content = JSON.parse(message.content.toString());
 
     if (canRetry) {
       const requeueHeaders = {
-        [RETRY_HEADERS.RETRY_ATTEMPTED]: retryAttempted + 1,
-      }
+        [RETRY_HEADERS.RETRY_ATTEMPTED]: retryAttempted + 1
+      };
       await this.$channel.sendToQueue(this.queue.name, content, {
-        headers: requeueHeaders,
-      })
+        headers: requeueHeaders
+      });
     } else if (this.options.exceptionQueue) {
       await this.$channel.sendToQueue(this.options.exceptionQueue, {
         content: content,
-        error: error.toString(),
-      })
+        error: error.toString()
+      });
     }
   }
 }

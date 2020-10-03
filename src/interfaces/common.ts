@@ -1,4 +1,3 @@
-
 export interface RetryOptions {
-  maxAttempts: number
+  maxAttempts: number;
 }
