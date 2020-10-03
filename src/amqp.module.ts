@@ -1,46 +1,46 @@
 import { DiscoveryModule } from '@golevelup/nestjs-discovery';
 import { ModuleRef } from '@nestjs/core';
 import { DynamicModule, Global, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
-import { AMQPContainer } from './amqp.container';
-import { AMQPExplorer } from './amqp.explorer';
-import { getAMQPConnectionOptionsToken, getAMQPConnectionToken } from './shared/token.util';
-import { createAMQPConnection, createAsyncAMQPConnectionOptions } from './amqp.providers';
-import { AMQPAsyncConnectionOptions, AMQPConnectionOptions } from './amqp.options';
+import { AmqpContainer } from './amqp.container';
+import { AmqpExplorer } from './amqp.explorer';
+import { getAmqpConnectionOptionsToken, getAmqpConnectionToken } from './shared/token.util';
+import { createAmqpConnection, createAsyncAmqpConnectionOptions } from './amqp.providers';
+import { AmqpAsyncConnectionOptions, AmqpConnectionOptions } from './amqp.options';
 
 @Global()
 @Module({
   imports: [DiscoveryModule]
 })
-export class AMQPModule implements OnModuleInit, OnModuleDestroy {
+export class AmqpModule implements OnModuleInit, OnModuleDestroy {
   constructor(private readonly moduleRef: ModuleRef) {}
 
-  static register(options: AMQPConnectionOptions): DynamicModule {
+  static register(options: AmqpConnectionOptions): DynamicModule {
     return {
-      module: AMQPModule,
+      module: AmqpModule,
       providers: [
-        AMQPExplorer,
+        AmqpExplorer,
         {
-          provide: getAMQPConnectionOptionsToken(options.name),
+          provide: getAmqpConnectionOptionsToken(options.name),
           useValue: options
         },
-        createAMQPConnection(options.name)
+        createAmqpConnection(options.name)
       ],
-      exports: [getAMQPConnectionToken(options.name)]
+      exports: [getAmqpConnectionToken(options.name)]
     };
   }
 
-  static forRootAsync(options: AMQPAsyncConnectionOptions): DynamicModule {
+  static forRootAsync(options: AmqpAsyncConnectionOptions): DynamicModule {
     return {
-      module: AMQPModule,
+      module: AmqpModule,
       imports: options.imports,
-      providers: [AMQPExplorer, createAsyncAMQPConnectionOptions(options), createAMQPConnection(options.name)],
-      exports: [getAMQPConnectionToken(options.name)]
+      providers: [AmqpExplorer, createAsyncAmqpConnectionOptions(options), createAmqpConnection(options.name)],
+      exports: [getAmqpConnectionToken(options.name)]
     };
   }
 
   async onModuleInit() {}
 
   async onModuleDestroy() {
-    await AMQPContainer.getInstance().clearAndShutdown();
+    await AmqpContainer.getInstance().clearAndShutdown();
   }
 }

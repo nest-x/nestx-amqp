@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AMQP_TEST_URLS } from '../__tests__/__fixtures__/amqp.test.fixtures';
-import { AMQPModule } from '../amqp.module';
+import { AmqpModule } from '../amqp.module';
 
-describe('AMQP Module', () => {
+describe('Amqp Module', () => {
   it('# should module define with sync connection options correctly', async (done) => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        AMQPModule.register({
+        AmqpModule.register({
           urls: AMQP_TEST_URLS
         })
       ]
@@ -15,9 +15,9 @@ describe('AMQP Module', () => {
     const app = module.createNestApplication();
     await app.init();
 
-    const amqpModule = module.get(AMQPModule);
+    const amqpModule = module.get(AmqpModule);
 
-    expect(amqpModule).toBeInstanceOf(AMQPModule);
+    expect(amqpModule).toBeInstanceOf(AmqpModule);
 
     await app.close();
     done();
@@ -26,7 +26,7 @@ describe('AMQP Module', () => {
   it('# should module define with async connection options correctly', async (done) => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        AMQPModule.forRootAsync({
+        AmqpModule.forRootAsync({
           useFactory: () => ({
             urls: AMQP_TEST_URLS
           })
@@ -37,9 +37,9 @@ describe('AMQP Module', () => {
     const app = module.createNestApplication();
     await app.init();
 
-    const amqpModule = module.get(AMQPModule);
+    const amqpModule = module.get(AmqpModule);
 
-    expect(amqpModule).toBeInstanceOf(AMQPModule);
+    expect(amqpModule).toBeInstanceOf(AmqpModule);
 
     await app.close();
     done();

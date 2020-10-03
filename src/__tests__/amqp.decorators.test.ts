@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AMQP_CONNECTION, USE_AMQP_CONNECTION_TOKEN } from '../amqp.constants';
-import { AMQPModule } from '../amqp.module';
-import { UseAMQPConnection } from '../decorators/inject-connection';
+import { AmqpModule } from '../amqp.module';
+import { UseAmqpConnection } from '../decorators/inject-connection';
 import { PublishExchange } from '../decorators/publish-exchange';
 import { PublishQueue } from '../decorators/publish-queue';
 import { SubscribeQueue } from '../decorators/subscribe-queue';
@@ -11,22 +9,24 @@ import { ConsumeQueueOptions } from '../interfaces/queue';
 import { AMQP_TEST_URLS } from './__fixtures__/amqp.test.fixtures';
 import { wait } from './__fixtures__/shared.utils';
 
-describe('AMQP Decorators', () => {
+describe('Amqp Decorators', () => {
   it('# should use @PublishQueue decorator with default connection', async (done) => {
     const queue = 'TEST.QUEUE';
 
     @Injectable()
     class TestPublishQueueService {
       @PublishQueue(queue)
-      async testPublishQueue(content) {}
+      async testPublishQueue(content) {
+      }
 
       @SubscribeQueue(queue)
-      async testSubscribeQueue(content) {}
+      async testSubscribeQueue(content) {
+      }
     }
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        AMQPModule.register({
+        AmqpModule.register({
           urls: AMQP_TEST_URLS
         })
       ],
@@ -56,12 +56,13 @@ describe('AMQP Decorators', () => {
       }
 
       @SubscribeQueue(queue)
-      async testSubscribeQueue(content) {}
+      async testSubscribeQueue(content) {
+      }
     }
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        AMQPModule.register({
+        AmqpModule.register({
           urls: AMQP_TEST_URLS
         })
       ],
@@ -88,18 +89,20 @@ describe('AMQP Decorators', () => {
 
     @Injectable()
     class TestPublishQueueService {
-      @UseAMQPConnection('log4js')
+      @UseAmqpConnection('log4js')
       @PublishQueue(queue)
-      async testPublishQueue(content) {}
+      async testPublishQueue(content) {
+      }
 
-      @UseAMQPConnection('log4js')
+      @UseAmqpConnection('log4js')
       @SubscribeQueue(queue)
-      async testSubscribeQueue(content) {}
+      async testSubscribeQueue(content) {
+      }
     }
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        AMQPModule.register({
+        AmqpModule.register({
           name: 'log4js',
           urls: AMQP_TEST_URLS
         })
@@ -127,7 +130,8 @@ describe('AMQP Decorators', () => {
       public consumed = 0;
 
       @PublishExchange(exchange, { routingKey })
-      async testPublishExchange(content) {}
+      async testPublishExchange(content) {
+      }
 
       @SubscribeQueue(routingKey)
       async testSubscribeQueue(content) {
@@ -137,7 +141,7 @@ describe('AMQP Decorators', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        AMQPModule.register({
+        AmqpModule.register({
           urls: AMQP_TEST_URLS
         })
       ],
@@ -162,7 +166,8 @@ describe('AMQP Decorators', () => {
       public consumed = 0;
 
       @PublishQueue('TEST.QUEUE.FOR.SUBSCRIBE')
-      async testPublishQueue(content) {}
+      async testPublishQueue(content) {
+      }
 
       @SubscribeQueue('TEST.QUEUE.FOR.SUBSCRIBE')
       async testSubscribeQueue(content) {
@@ -172,7 +177,7 @@ describe('AMQP Decorators', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        AMQPModule.register({
+        AmqpModule.register({
           urls: AMQP_TEST_URLS
         })
       ],
@@ -201,10 +206,12 @@ describe('AMQP Decorators', () => {
       public replyCount = 0;
 
       @PublishQueue(queue)
-      async testPublishQueue(content, options?) {}
+      async testPublishQueue(content, options?) {
+      }
 
       @PublishQueue(replyQueue)
-      async testPublishReplyQueue(content) {}
+      async testPublishReplyQueue(content) {
+      }
 
       @SubscribeQueue(queue)
       async testSubscribeQueue(content) {
@@ -224,7 +231,7 @@ describe('AMQP Decorators', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        AMQPModule.register({
+        AmqpModule.register({
           urls: AMQP_TEST_URLS
         })
       ],
@@ -261,7 +268,8 @@ describe('AMQP Decorators', () => {
       exceptionCount = 0;
 
       @PublishQueue(queue)
-      async testPublishQueue(content, options?) {}
+      async testPublishQueue(content, options?) {
+      }
 
       @PublishQueue(replyQueue)
       async testPublishReplyQueue(content) {
@@ -289,7 +297,7 @@ describe('AMQP Decorators', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        AMQPModule.register({
+        AmqpModule.register({
           urls: AMQP_TEST_URLS
         })
       ],
@@ -329,7 +337,8 @@ describe('AMQP Decorators', () => {
       exceptionCount = 0;
 
       @PublishQueue(queue)
-      async testPublishQueue(content, options?) {}
+      async testPublishQueue(content, options?) {
+      }
 
       @PublishQueue(replyQueue)
       async testPublishReplyQueue(content) {
@@ -357,7 +366,7 @@ describe('AMQP Decorators', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        AMQPModule.register({
+        AmqpModule.register({
           urls: AMQP_TEST_URLS
         })
       ],

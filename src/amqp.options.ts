@@ -1,26 +1,26 @@
 import { AmqpConnectionManagerOptions } from 'amqp-connection-manager';
 import { FactoryProvider, ModuleMetadata, Type } from '@nestjs/common/interfaces';
 
-export type AMQPConnectURLString = string;
+export type AmqpConnectURLString = string;
 
 /**
  * @desc provide a factory when you can map your amqp connection as part of
  *       application
  * */
-export interface AMQPConnectionOptionsFactory {
-  createAMQPConnectionOptions(): AMQPConnectionOptions | Promise<AMQPConnectionOptions>;
+export interface AmqpConnectionOptionsFactory {
+  createAMQPConnectionOptions(): AmqpConnectionOptions | Promise<AmqpConnectionOptions>;
 }
 
-export interface AMQPConnectionOptions {
+export interface AmqpConnectionOptions {
   name?: string;
-  urls: AMQPConnectURLString[];
+  urls: AmqpConnectURLString[];
   options?: AmqpConnectionManagerOptions;
 }
 
-export interface AMQPAsyncConnectionOptions extends Pick<ModuleMetadata, 'imports'> {
+export interface AmqpAsyncConnectionOptions extends Pick<ModuleMetadata, 'imports'> {
   name?: string;
   inject?: FactoryProvider['inject'];
-  useExisting?: Type<AMQPConnectionOptionsFactory>;
-  useClass?: Type<AMQPConnectionOptionsFactory>;
-  useFactory?: (...args: any[]) => AMQPConnectionOptions | Promise<AMQPConnectionOptions>;
+  useExisting?: Type<AmqpConnectionOptionsFactory>;
+  useClass?: Type<AmqpConnectionOptionsFactory>;
+  useFactory?: (...args: any[]) => AmqpConnectionOptions | Promise<AmqpConnectionOptions>;
 }

@@ -20,11 +20,11 @@ import { ConsumeQueueOptions, Queue } from './interfaces/queue';
 import { Consumer } from './services/consumer';
 import { ExchangeProducer } from './services/exchange-producer';
 import { QueueProducer } from './services/queue-producer';
-import { getAMQPConnectionToken } from './shared/token.util';
+import { getAmqpConnectionToken } from './shared/token.util';
 
 @Injectable()
-export class AMQPExplorer implements OnModuleInit {
-  private readonly logger = new Logger(AMQPExplorer.name);
+export class AmqpExplorer implements OnModuleInit {
+  private readonly logger = new Logger(AmqpExplorer.name);
 
   constructor(private readonly moduleRef: ModuleRef, private readonly discoveryService: DiscoveryService) {}
 
@@ -50,7 +50,7 @@ export class AMQPExplorer implements OnModuleInit {
       const originalHandler = method.discoveredMethod.handler;
 
       const connectionName = Reflect.getMetadata(USE_AMQP_CONNECTION_TOKEN, originalHandler);
-      const injectConnectionToken = getAMQPConnectionToken(connectionName);
+      const injectConnectionToken = getAmqpConnectionToken(connectionName);
       const connection: AmqpConnectionManager = this.moduleRef.get<AmqpConnectionManager>(injectConnectionToken);
       const queue: Queue = Reflect.getMetadata(PUBLISH_QUEUE_METADATA_TOKEN, originalHandler);
       const handlerContext = method.discoveredMethod.parentClass.instance;
@@ -76,7 +76,7 @@ export class AMQPExplorer implements OnModuleInit {
       const originalHandler = method.discoveredMethod.handler;
 
       const connectionName = Reflect.getMetadata(USE_AMQP_CONNECTION_TOKEN, originalHandler);
-      const injectConnectionToken = getAMQPConnectionToken(connectionName);
+      const injectConnectionToken = getAmqpConnectionToken(connectionName);
       const connection: AmqpConnectionManager = this.moduleRef.get<AmqpConnectionManager>(injectConnectionToken);
       const exchange: Exchange = Reflect.getMetadata(PUBLISH_EXCHANGE_METADATA_TOKEN, originalHandler);
       const handlerContext = method.discoveredMethod.parentClass.instance;
@@ -102,7 +102,7 @@ export class AMQPExplorer implements OnModuleInit {
       const originalHandler = method.discoveredMethod.handler;
 
       const connectionName = Reflect.getMetadata(USE_AMQP_CONNECTION_TOKEN, originalHandler);
-      const injectConnectionToken = getAMQPConnectionToken(connectionName);
+      const injectConnectionToken = getAmqpConnectionToken(connectionName);
       const connection: AmqpConnectionManager = this.moduleRef.get<AmqpConnectionManager>(injectConnectionToken);
 
       const queue: Queue = Reflect.getMetadata(SUBSCRIBE_QUEUE_METADATA_TOKEN, originalHandler);
