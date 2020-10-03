@@ -10,10 +10,17 @@
     "noImplicitAny": false,
     "target": "es6",
     "sourceMap": false,
-    "outDir": "./dist",
+    "skipLibCheck": true,
     "rootDir": "./src",
-    "skipLibCheck": true
+    "outDir": "./dist"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "src/__tests__", "**/*.spec.ts", "**/*.test.ts"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/__tests__",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
 }

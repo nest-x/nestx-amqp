@@ -1,6 +1,6 @@
 import { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager';
 import { OnModuleInit } from '@nestjs/common';
-import { Message, Options } from 'amqplib';
+import { Message } from 'amqplib';
 import { ConsumeQueueOptions, Queue, RETRY_HEADERS } from '../interfaces/queue';
 
 export class Consumer implements OnModuleInit {

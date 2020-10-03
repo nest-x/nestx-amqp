@@ -11,7 +11,7 @@ Provide an `AMQP` connection as NestJS Module. Internally use [amqp-connection-m
 
 ## Features
 
-- Provide an `AMQPModule` create `AmqpConnectionManager` async
+- Provide an `AmqpModule` create `AmqpConnectionManager` async
 - Provide an injectable amqp connection manager at global
 - Provide decorators like `@PublishQueue` and `@SubscribeQueue` as method decorator for simple usage
 
@@ -31,13 +31,13 @@ yarn add nestx-amqp
 
 ```typescript
 import { Module } from '@nestjs/common'
-import { AMQPModule } from 'nestx-amqp'
+import { AmqpModule } from 'nestx-amqp'
 
 @Module({
   imports: [
-    AMQPModule.forRootAsync({
+    AmqpModule.forRootAsync({
       useFactory: () => ({
-        urls: ['amqp://devuser:devuser@localhost:5672?heartbeat=60'],
+        urls: ['amqp://guest:guest@localhost:5672?heartbeat=60'],
       }),
     }),
   ],
@@ -49,7 +49,7 @@ export class AppModule {}
 
 <br/>
 
-### Inject AMQPConnectionManager
+### Inject AmqpConnectionManager
 
 Use Symbol `AMQP_CONNECTION` for Injection:
 
@@ -62,10 +62,10 @@ import { Options } from 'amqplib'
 import { AMQP_CONNECTION } from 'nestx-amqp'
 
 export abstract class SimpleAbstractProducer implements OnModuleInit {
-  channel: ChannelWrapper
+  channel: ChannelWrapper;
 
-  abstract getQueue(): string
-  abstract getQueueOptions(): Options.AssertQueue
+  abstract getQueue(): string;
+  abstract getQueueOptions(): Options.AssertQueue;
 
   constructor(
     @Inject(AMQP_CONNECTION)
@@ -77,11 +77,11 @@ export abstract class SimpleAbstractProducer implements OnModuleInit {
       json: true,
       setup: (channel) => channel.assertQueue(this.queue),
     })
-    await this.channel.waitForConnect()
+    await this.channel.waitForConnect();
   }
 
   async send(message, options?: Options.Publish) {
-    await this.channel.sendToQueue(this.queue, message, options)
+    await this.channel.sendToQueue(this.queue, message, options);
   }
 }
 ```
@@ -96,21 +96,21 @@ export abstract class SimpleAbstractProducer implements OnModuleInit {
 
 ```typescript
 export interface Queue {
-  name: string
-  options?: Options.AssertQueue
+  name: string;
+  options?: Options.AssertQueue;
 }
 
 export interface RetryOptions {
-  maxAttempts: number
+  maxAttempts: number;
 }
 
 export interface BaseConsumeOptions {
-  prefetch: number
-  exceptionQueue?: string
+  prefetch: number;
+  exceptionQueue?: string;
 }
 
-export type PublishQueueOptions = Options.Publish
-export type ConsumeQueueOptions = BaseConsumeOptions & Partial<RetryOptions> & Options.Consume
+export type PublishQueueOptions = Options.Publish;
+export type ConsumeQueueOptions = BaseConsumeOptions & Partial<RetryOptions> & Options.Consume;
 ```
 
 #### `@PublishQueue()`
@@ -126,16 +126,16 @@ yourPublishQueueMethod(content:any, options?: amqplib.Options.Publish){}
 
 **Example:**
 
-> (You must register and enable `AMQPModule`)
+> (You must register and enable `AmqpModule`)
 
 ```typescript
 @Injectable()
 class TestMessageService {
-  queue = 'TEST.QUEUE'
+  queue = 'TEST.QUEUE';
 
   @PublishQueue(queue)
   async testPublishQueue(content) {
-    console.log(`call test publish queue with ${JSON.stringify(content)}`)
+    console.log(`call test publish queue with ${JSON.stringify(content)}`);
   }
 }
 ```
@@ -155,31 +155,31 @@ yourSubscribeQueueMethod(content){}
 
 ```typescript
 export interface RetryOptions {
-  maxAttempts: number
+  maxAttempts: number;
 }
 
 export interface BaseConsumeOptions {
-  prefetch: number
-  exceptionQueue?: string
+  prefetch: number;
+  exceptionQueue?: string;
 }
 
-export type ConsumeQueueOptions = BaseConsumeOptions & Partial<RetryOptions>
+export type ConsumeQueueOptions = BaseConsumeOptions & Partial<RetryOptions>;
 ```
 
 **Example:**
 
-> You must register and enable `AMQPModule`
+> You must register and enable `AmqpModule`
 
 ```typescript
 @Injectable()
 class TestMessageService {
-  queue = 'TEST.QUEUE'
+  queue = 'TEST.QUEUE';
 
   @SubscribeQueue(queue)
   async testSubscribeQueue(content) {
     // do your business handling code
     // save db? send email?
-    console.log(`handling content ${JSON.stringify(content)}`)
+    console.log(`handling content ${JSON.stringify(content)}`);
   }
 }
 ```
@@ -232,9 +232,9 @@ yourPublishExchangeMethod(content:any, options?: PublishExchangeOptions){}
 
 <br />
 
-#### `@UseAMQPConnection(name?:string)`
+#### `@UseAmqpConnection(name?:string)`
 
-Provide a `MethodDecorator` easily spec connection (when you register AMQPModule) with `@PublisQueue()` and `@SubscribeQueue`)
+Provide a `MethodDecorator` easily spec connection (when you register AmqpModule) with `@PublisQueue()` and `@SubscribeQueue`)
 
 > Recommend if you want to develop npm package using spec named connection
 
@@ -242,10 +242,10 @@ Provide a `MethodDecorator` easily spec connection (when you register AMQPModule
 
 ```typescript
 @Injectable()
-class AMQPLoggerService {
+class AmqpLoggerService {
   queue = 'LOGGER.QUEUE'
 
-  @UseAMQPConnection('logger')
+  @UseAmqpConnection('logger')
   @PublishQueue(queue)
   async logSideEffect(content) {
     // just do nothing here and auto send to LOGGER.QUEUE with spec `logger` connection
