@@ -1,3 +1,19 @@
+# [2.0.0](https://github.com/nest-x/nestx-amqp/compare/v1.3.2...v2.0.0) (2020-10-03)
+
+
+### Code Refactoring
+
+* abbreviations ([#244](https://github.com/nest-x/nestx-amqp/issues/244)) ([a49dad9](https://github.com/nest-x/nestx-amqp/commit/a49dad9f63f44b842138567599ce08f3fc837cb8))
+
+
+### BREAKING CHANGES
+
+* rename all `AMQP` prefix to `Amqp`.
+
+- add docker-compose.yml for local dev
+- update rabbitmq local dev url (update user/pass to default value resepect official image)
+- update example in README.md
+
 ## [1.3.2](https://github.com/nest-x/nestx-amqp/compare/v1.3.1...v1.3.2) (2020-07-15)
 
 
