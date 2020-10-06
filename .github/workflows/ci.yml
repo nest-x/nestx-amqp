@@ -12,7 +12,7 @@ jobs:
       image: node:lts
       env:
         CI: 'true'
-        RABBITMQ_URL: amqp://devuser:devuser@rabbitmq:5672
+        RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
     steps:
       - name: SCM
         uses: actions/checkout@v2
