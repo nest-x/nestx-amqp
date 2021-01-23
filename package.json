@@ -63,7 +63,7 @@
     "lodash": "4.17.20",
     "prettier": "2.2.1",
     "semantic-release": "17.3.7",
-    "sinon": "9.2.3",
+    "sinon": "9.2.4",
     "supertest": "6.1.1",
     "ts-jest": "26.4.4",
     "ts-loader": "8.0.14",
