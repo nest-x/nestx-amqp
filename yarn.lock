@@ -3443,10 +3443,10 @@ eslint-config-prettier@7.2.0:
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-7.2.0.tgz#f4a4bd2832e810e8cc7c1411ec85b3e85c0c53f9"
   integrity sha512-rV4Qu0C3nfJKPOAhFujFxB7RMP+URFyQqqOZW9DMRD7ZDTFyjaIlETU3xzHELt++4ugC0+Jm084HQYkkJe+Ivg==
 
-eslint-config-ts-lambdas@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-ts-lambdas/-/eslint-config-ts-lambdas-1.2.1.tgz#646dd90ea7c023e197cc95d4362a78dfab489301"
-  integrity sha512-gNwNUEWFZZ0+IcucLDCKuf7ncC0UaeZjdVG9ey4HuPpGqc2dAJzLap5cCwLIit7RO9lUrlNR0hZ5KggaVuJs8A==
+eslint-config-ts-lambdas@1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/eslint-config-ts-lambdas/-/eslint-config-ts-lambdas-1.2.3.tgz#d67802bb29aabbc5937c1533cb13b89ea5bace77"
+  integrity sha512-fVAVTza+i3GIE3g+QScGPEbbbJDJhwGi0bhGUrMri9tAdZHPiXdAJ/MGrp67kwMyRS8t3a/P2PLxFCPcmJSEbA==
 
 eslint-import-resolver-node@^0.3.4:
   version "0.3.4"
