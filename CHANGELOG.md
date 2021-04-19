@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/nest-x/nestx-amqp/compare/v2.0.1...v2.0.2) (2021-04-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @golevelup/nestjs-discovery to ^2.3.1 ([c94294d](https://github.com/nest-x/nestx-amqp/commit/c94294d304f75fc8fddad0f73954341c0a93ea61))
+
 ## [2.0.1](https://github.com/nest-x/nestx-amqp/compare/v2.0.0...v2.0.1) (2021-02-22)
 
 
