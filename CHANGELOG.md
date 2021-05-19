@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/nest-x/nestx-amqp/compare/v2.0.2...v2.0.3) (2021-05-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency amqplib to ^0.8.0 ([485a57e](https://github.com/nest-x/nestx-amqp/commit/485a57e6bc411f4d2b55952a039ce79ede1f6e9c))
+
 ## [2.0.2](https://github.com/nest-x/nestx-amqp/compare/v2.0.1...v2.0.2) (2021-04-19)
 
 
