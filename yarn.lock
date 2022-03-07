@@ -1846,10 +1846,10 @@ ajv@^8.0.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-amqp-connection-manager@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/amqp-connection-manager/-/amqp-connection-manager-3.2.0.tgz#83534360533a48183113f8213af0d230c7b8d461"
-  integrity sha512-CnxBqUXd6ft4DbGs8YXNp0hDZgWiDQAghxG6JRJuxGbGEQdAjsb4oRR9PWBqO5V/Gssp7lDKigXX+DtSczID2w==
+amqp-connection-manager@^4.0.0:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/amqp-connection-manager/-/amqp-connection-manager-4.1.1.tgz#15ddc23b823ebba133efbe6629fba6d57cdd5f15"
+  integrity sha512-vkEwurqrVu4O44+lmGZHJs2pPWHU746lc81UCrp+IYusBt+F09rVMjgBPnTv28NzkC+9HhQUIEz80xwTpz0bYA==
   dependencies:
     promise-breaker "^5.0.0"
 
