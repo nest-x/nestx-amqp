@@ -1,3 +1,11 @@
+## [2.0.4](https://github.com/nest-x/nestx-amqp/compare/v2.0.3...v2.0.4) (2022-03-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency amqp-connection-manager to v4 ([#651](https://github.com/nest-x/nestx-amqp/issues/651)) ([fbfed4a](https://github.com/nest-x/nestx-amqp/commit/fbfed4a948bb9d97f8f2c458f58dfe31580191a7))
+* **deps:** update dependency rxjs to v7 ([#456](https://github.com/nest-x/nestx-amqp/issues/456)) ([f5444e0](https://github.com/nest-x/nestx-amqp/commit/f5444e079c6b70f64306ddcd4fe292972d5ecc91))
+
 ## [2.0.3](https://github.com/nest-x/nestx-amqp/compare/v2.0.2...v2.0.3) (2021-05-19)
 
 
