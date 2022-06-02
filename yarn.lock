@@ -1861,13 +1861,12 @@ amqp-connection-manager@^4.0.0:
   dependencies:
     promise-breaker "^5.0.0"
 
-amqplib@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/amqplib/-/amqplib-0.9.0.tgz#b2b8705bf8ca3579caef244f01a30a568512f0fd"
-  integrity sha512-emwSdJElmSp52JIKehjLNimKqbZcGUBGdcqST9fll+C/Uss8fWoGyyWlwt20f5lD+SDdozoc4WhF3uDCUOL2ww==
+amqplib@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/amqplib/-/amqplib-0.10.0.tgz#766d696f8ceae097ee9eb73e6796999e5d40a1db"
+  integrity sha512-UueEnRGY6upiSvGsSYM22Woa1SeSukqYtqgYW4Gj8gHvbf5BRhhYRqf3kQ8aSUYYffTOZi6SeOVW2eOXt0hpPA==
   dependencies:
     bitsyntax "~0.1.0"
-    bluebird "^3.7.2"
     buffer-more-ints "~1.0.0"
     readable-stream "1.x >=1.1.9"
     url-parse "~1.5.10"
@@ -2291,11 +2290,6 @@ bl@^4.1.0:
     buffer "^5.5.0"
     inherits "^2.0.4"
     readable-stream "^3.4.0"
-
-bluebird@^3.7.2:
-  version "3.7.2"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
-  integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
 body-parser@1.19.2:
   version "1.19.2"
