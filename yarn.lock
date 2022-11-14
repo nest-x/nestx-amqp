@@ -1231,12 +1231,11 @@
     "@types/bluebird" "*"
     "@types/node" "*"
 
-"@types/amqplib@0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@types/amqplib/-/amqplib-0.8.2.tgz#9c46f2c7fac381e4f81bcb612c00d54549697d22"
-  integrity sha512-p+TFLzo52f8UanB+Nq6gyUi65yecAcRY3nYowU6MPGFtaJvEDxcnFWrxssSTkF+ts1W3zyQDvgVICLQem5WxRA==
+"@types/amqplib@0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@types/amqplib/-/amqplib-0.10.0.tgz#41c54c82e37fa9b57b147299f8c044013d7559c5"
+  integrity sha512-39XGMpfVGqjYK+LjPqMb/98rm/KwZCfJj5S1K2lGg9PqzhUQek5iFhrtgOLQGw5QbArsPYCTj7ElEJpP3Hhb1w==
   dependencies:
-    "@types/bluebird" "*"
     "@types/node" "*"
 
 "@types/babel__core@^7.0.0":
