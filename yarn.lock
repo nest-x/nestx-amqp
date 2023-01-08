@@ -3032,17 +3032,6 @@ cors@2.8.5:
     object-assign "^4"
     vary "^1"
 
-cosmiconfig@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-7.0.0.tgz#ef9b44d773959cae63ddecd122de23853b60f8d3"
-  integrity sha512-pondGvTuVYDk++upghXJabWzL6Kxu6f26ljFw64Swq9v6sQPUL3EUlVDV56diOjpCayKihL6hVe8exIACU4XcA==
-  dependencies:
-    "@types/parse-json" "^4.0.0"
-    import-fresh "^3.2.1"
-    parse-json "^5.0.0"
-    path-type "^4.0.0"
-    yaml "^1.10.0"
-
 cosmiconfig@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-7.0.1.tgz#714d756522cace867867ccb4474c5d01bbae5d6d"
@@ -3053,6 +3042,16 @@ cosmiconfig@^7.0.1:
     parse-json "^5.0.0"
     path-type "^4.0.0"
     yaml "^1.10.0"
+
+cosmiconfig@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-8.0.0.tgz#e9feae014eab580f858f8a0288f38997a7bebe97"
+  integrity sha512-da1EafcpH6b/TD8vDRaWV7xFINlHlF6zKsGwS1TsuVJTZRkquaS5HTMq7uq6h31619QjbsYl21gVDOm32KM1vQ==
+  dependencies:
+    import-fresh "^3.2.1"
+    js-yaml "^4.1.0"
+    parse-json "^5.0.0"
+    path-type "^4.0.0"
 
 create-error-class@^3.0.0:
   version "3.0.2"
@@ -4747,10 +4746,10 @@ hosted-git-info@^2.1.4:
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.5.tgz#759cfcf2c4d156ade59b0b2dfabddc42a6b9c70c"
   integrity sha512-kssjab8CvdXfcXMXVcvsXum4Hwdq9XGtRD3TteMEvEbq0LXyiNQr6AprqKqfeaDXze7SxWvRxdpwE6ku7ikLkg==
 
-hosted-git-info@^5.1.0:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-5.2.1.tgz#0ba1c97178ef91f3ab30842ae63d6a272341156f"
-  integrity sha512-xIcQYMnhcx2Nr4JTjsFmwwnr9vldugPy9uVm0o87bjqqWMv9GaqsTeT+i99wTl0mk1uLxJtHxLb8kymqTENQsw==
+hosted-git-info@^6.0.0:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-6.1.1.tgz#629442c7889a69c05de604d52996b74fe6f26d58"
+  integrity sha512-r0EI+HBMcXadMrugk0GCQ+6BQV39PiWAZVfq7oIckeGiN7sjRGyQxPdft3nQekFTCQbYxLBH+/axZMeH8UX6+w==
   dependencies:
     lru-cache "^7.5.1"
 
@@ -8606,10 +8605,10 @@ schema-utils@^3.1.0, schema-utils@^3.1.1:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-semantic-release@20.0.0:
-  version "20.0.0"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-20.0.0.tgz#7edede34e088ab0aa4c3948d9909c716ab37dc99"
-  integrity sha512-FAgxTY2Ri7RQebCUTIjrNzyJcK6Fn73vkYbKLVGnneNoW488/qb8JDgzJ7wdK8gsguBTui2qdwe6jHiD5YVmxg==
+semantic-release@20.0.1:
+  version "20.0.1"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-20.0.1.tgz#247a4098ffc99cb69725bf3638e30550f2644118"
+  integrity sha512-v3EYBMn3nGjpRrEiPrYMMwMD7iCqCqwG1F+g2MOpawFwbc/X4kNDbDDnZgHY8F6iU+o8KwW2uvF8/BdMFKzrYw==
   dependencies:
     "@semantic-release/commit-analyzer" "^9.0.2"
     "@semantic-release/error" "^3.0.0"
@@ -8617,7 +8616,7 @@ semantic-release@20.0.0:
     "@semantic-release/npm" "^9.0.0"
     "@semantic-release/release-notes-generator" "^10.0.0"
     aggregate-error "^4.0.1"
-    cosmiconfig "^7.0.0"
+    cosmiconfig "^8.0.0"
     debug "^4.0.0"
     env-ci "^8.0.0"
     execa "^6.1.0"
@@ -8626,7 +8625,7 @@ semantic-release@20.0.0:
     get-stream "^6.0.0"
     git-log-parser "^1.2.0"
     hook-std "^3.0.0"
-    hosted-git-info "^5.1.0"
+    hosted-git-info "^6.0.0"
     lodash-es "^4.17.21"
     marked "^4.1.0"
     marked-terminal "^5.1.1"
