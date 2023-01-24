@@ -62,7 +62,7 @@
     "jest": "26.6.3",
     "lodash": "4.17.21",
     "prettier": "2.8.3",
-    "semantic-release": "20.0.3",
+    "semantic-release": "20.0.4",
     "sinon": "15.0.1",
     "supertest": "6.3.3",
     "ts-jest": "26.5.6",
