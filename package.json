@@ -61,7 +61,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "jest": "26.6.3",
     "lodash": "4.17.21",
-    "prettier": "2.8.3",
+    "prettier": "2.8.4",
     "semantic-release": "20.1.0",
     "sinon": "15.0.1",
     "supertest": "6.3.3",
