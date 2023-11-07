@@ -1506,10 +1506,10 @@
     "@types/bluebird" "*"
     "@types/node" "*"
 
-"@types/amqplib@0.10.3":
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/@types/amqplib/-/amqplib-0.10.3.tgz#bcb68fbcc5d040bc1e57f4f9cdcd3139e0064597"
-  integrity sha512-ZVkD5RqoW6+n84WanWf0a74mT0CVWdXOEEEC9nZvseD//j36XiYGR2phjpHQM6JpYR4vcWnjgUbqFCFG7MB+lw==
+"@types/amqplib@0.10.4":
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/@types/amqplib/-/amqplib-0.10.4.tgz#0bf1ceefe280c02502b209fa9f06394b0c4cd688"
+  integrity sha512-Y5Sqquh/LqDxSgxYaAAFNM0M7GyONtSDCcFMJk+DQwYEjibPyW6y+Yu9H9omdkKc3epyXULmFN3GTaeBHhn2Hg==
   dependencies:
     "@types/node" "*"
 
