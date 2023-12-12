@@ -3391,7 +3391,7 @@ cors@2.8.5:
     object-assign "^4"
     vary "^1"
 
-cosmiconfig@^8.2.0:
+cosmiconfig@^8.0.0, cosmiconfig@^8.2.0:
   version "8.3.6"
   resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-8.3.6.tgz#060a2b871d66dba6c8538ea1118ba1ac16f5fae3"
   integrity sha512-kcZ6+W5QzcJ3P1Mt+83OUv/oHFqZHIx8DuxG6eZ5RGMERoLqp4BuGjhHLYGK+Kf5XVkQvqBSmAy/nGWN3qDgEA==
@@ -3400,16 +3400,6 @@ cosmiconfig@^8.2.0:
     js-yaml "^4.1.0"
     parse-json "^5.2.0"
     path-type "^4.0.0"
-
-cosmiconfig@^9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-9.0.0.tgz#34c3fc58287b915f3ae905ab6dc3de258b55ad9d"
-  integrity sha512-itvL5h8RETACmOTFc4UfIyB2RfEHi71Ax6E/PivVxq9NseKbOWpeyHEOIbmAw1rs8Ak0VursQNww7lf7YtUwzg==
-  dependencies:
-    env-paths "^2.2.1"
-    import-fresh "^3.3.0"
-    js-yaml "^4.1.0"
-    parse-json "^5.2.0"
 
 create-require@^1.1.0:
   version "1.1.1"
@@ -3838,11 +3828,6 @@ env-paths@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-2.2.0.tgz#cdca557dc009152917d6166e2febe1f039685e43"
   integrity sha512-6u0VYSCo/OW6IoD5WCLLy9JUGARbamfSavcNXry/eu8aHVFei6CD3Sw+VGX5alea1i9pgPHW0mbu6Xj0uBh7gA==
-
-env-paths@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-2.2.1.tgz#420399d416ce1fbe9bc0a07c62fa68d67fd0f8f2"
-  integrity sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==
 
 err-code@^2.0.2:
   version "2.0.3"
@@ -9228,10 +9213,10 @@ schema-utils@^3.2.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-semantic-release@22.0.11:
-  version "22.0.11"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-22.0.11.tgz#f42152039b81b4722f8d685efa23bbae78f5f882"
-  integrity sha512-3gNOqnYUaZ445mIiVvjwWfNmuvbyTMz5e2uHsL7d23e5945TPy6+rlckPE8QUU0kj84C9vbwTzc60oIXAc77hg==
+semantic-release@22.0.12:
+  version "22.0.12"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-22.0.12.tgz#b8dd1a096b597080e05f30554ee5d128fe6dac84"
+  integrity sha512-0mhiCR/4sZb00RVFJIUlMuiBkW3NMpVIW2Gse7noqEMoFGkvfPPAImEQbkBV8xga4KOPP4FdTRYuLLy32R1fPw==
   dependencies:
     "@semantic-release/commit-analyzer" "^11.0.0"
     "@semantic-release/error" "^4.0.0"
@@ -9239,7 +9224,7 @@ semantic-release@22.0.11:
     "@semantic-release/npm" "^11.0.0"
     "@semantic-release/release-notes-generator" "^12.0.0"
     aggregate-error "^5.0.0"
-    cosmiconfig "^9.0.0"
+    cosmiconfig "^8.0.0"
     debug "^4.0.0"
     env-ci "^10.0.0"
     execa "^8.0.0"
