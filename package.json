@@ -46,7 +46,7 @@
     "@nestjs/testing": "8.4.7",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
-    "@types/amqp-connection-manager": "2.0.12",
+    "@types/amqp-connection-manager": "3.4.1",
     "@types/amqplib": "0.10.5",
     "@types/express": "4.17.21",
     "@types/jest": "27.5.2",
