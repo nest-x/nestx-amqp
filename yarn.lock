@@ -1544,20 +1544,12 @@
     "@tufjs/canonical-json" "2.0.0"
     minimatch "^9.0.3"
 
-"@types/amqp-connection-manager@2.0.12":
-  version "2.0.12"
-  resolved "https://registry.yarnpkg.com/@types/amqp-connection-manager/-/amqp-connection-manager-2.0.12.tgz#809a01207193ffc15b1689806b51dfeba7b3f9f3"
-  integrity sha512-2GX1jG6ECpEXQF0X68gTTZc8MQ8GA0dM2mAd1irTpWlKzGKlGzCBtb1YnqLHozNNsoLtGI6UXSp0q06jU1LA6g==
+"@types/amqp-connection-manager@3.4.1":
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/@types/amqp-connection-manager/-/amqp-connection-manager-3.4.1.tgz#f0f22aeaddbd5e0da5651748e7c9d34643685e10"
+  integrity sha512-IUKZjnE7V+aUbuHvNZAZiAo4ew7Zzgz1aDiZiN2QEms1EzCYegsT7/Kondgc3UuC2j+Xjz8Gj7jIxnnQ5dWtGQ==
   dependencies:
-    "@types/amqplib" "*"
-
-"@types/amqplib@*":
-  version "0.5.13"
-  resolved "https://registry.yarnpkg.com/@types/amqplib/-/amqplib-0.5.13.tgz#a0dc9be08f38b91e5f7532acf0c89b0e515cdc6c"
-  integrity sha512-0r8cJfUajAlcHxlJsZyqRrSAYzv+pJPsaAQjDC6e5rACi3AOIuR0AfevJG7NLvw3Qu4EGhf3KS/ECwd5cUAY2A==
-  dependencies:
-    "@types/bluebird" "*"
-    "@types/node" "*"
+    amqp-connection-manager "*"
 
 "@types/amqplib@0.10.5":
   version "0.10.5"
@@ -1616,11 +1608,6 @@
   integrity sha512-Pzh9O3sTK8V6I1olsXpCfj2k/ygO2q1X0vhhnDrEQyYLHZesWz+zMZMVcwXLCYf0U36EtmyYaFGPfXlTtDHe3A==
   dependencies:
     "@babel/types" "^7.3.0"
-
-"@types/bluebird@*":
-  version "3.5.29"
-  resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.29.tgz#7cd933c902c4fc83046517a1bef973886d00bdb6"
-  integrity sha512-kmVtnxTuUuhCET669irqQmPAez4KFnFVKvpleVRyfC3g+SHD1hIkFZcWLim9BVcwUBLO59o8VZE4yGCmTif8Yw==
 
 "@types/body-parser@*":
   version "1.19.0"
@@ -2281,7 +2268,7 @@ ajv@^8.0.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-amqp-connection-manager@^4.0.0:
+amqp-connection-manager@*, amqp-connection-manager@^4.0.0:
   version "4.1.14"
   resolved "https://registry.yarnpkg.com/amqp-connection-manager/-/amqp-connection-manager-4.1.14.tgz#603d20ffbc6d90fe464c2a08600c7644c9475342"
   integrity sha512-1km47dIvEr0HhMUazqovSvNwIlSvDX2APdUpULaINtHpiki1O+cLRaTeXb/jav4OLtH+k6GBXx5gsKOT9kcGKQ==
