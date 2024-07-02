@@ -30,7 +30,7 @@
   "dependencies": {
     "@golevelup/nestjs-discovery": "^2.3.1",
     "@nestjs/common": "^8.0.0",
-    "@nestjs/core": "^8.0.0",
+    "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "amqp-connection-manager": "^4.0.0",
     "amqplib": "^0.10.0",
