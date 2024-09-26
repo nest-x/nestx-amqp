@@ -48,7 +48,7 @@
     "@semantic-release/git": "10.0.1",
     "@types/amqp-connection-manager": "3.4.1",
     "@types/amqplib": "0.10.5",
-    "@types/express": "4.17.21",
+    "@types/express": "5.0.0",
     "@types/jest": "27.5.2",
     "@types/node": "20.16.9",
     "@types/supertest": "6.0.2",
