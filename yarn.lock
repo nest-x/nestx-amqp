@@ -1560,10 +1560,10 @@
     "@tufjs/canonical-json" "2.0.0"
     minimatch "^9.0.3"
 
-"@types/amqp-connection-manager@3.4.1":
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/@types/amqp-connection-manager/-/amqp-connection-manager-3.4.1.tgz#f0f22aeaddbd5e0da5651748e7c9d34643685e10"
-  integrity sha512-IUKZjnE7V+aUbuHvNZAZiAo4ew7Zzgz1aDiZiN2QEms1EzCYegsT7/Kondgc3UuC2j+Xjz8Gj7jIxnnQ5dWtGQ==
+"@types/amqp-connection-manager@3.4.5":
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/@types/amqp-connection-manager/-/amqp-connection-manager-3.4.5.tgz#3fdb707dd9a726f1fe636bcb19c75a70cf49184a"
+  integrity sha512-VfHJUZghfSZncs7x2O7r69oV6766GTS+0dGvKfGnyOUKazsYzdCIgNGI7WOqYqKlGwF9LcQAo4+6JXtnnP0liA==
   dependencies:
     amqp-connection-manager "*"
 
