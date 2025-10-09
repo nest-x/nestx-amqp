@@ -34,7 +34,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "amqp-connection-manager": "^4.0.0",
     "amqplib": "^0.10.0",
-    "patch-package": "^6.2.0",
+    "patch-package": "^8.0.0",
     "postinstall-postinstall": "^2.0.0",
     "reflect-metadata": "^0.2.0",
     "rimraf": "^3.0.0",
