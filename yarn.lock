@@ -1553,10 +1553,10 @@
   dependencies:
     amqp-connection-manager "*"
 
-"@types/amqplib@0.10.7":
-  version "0.10.7"
-  resolved "https://registry.yarnpkg.com/@types/amqplib/-/amqplib-0.10.7.tgz#62fbd07fbdab89a295bc1614779b458d1657eeff"
-  integrity sha512-IVj3avf9AQd2nXCx0PGk/OYq7VmHiyNxWFSb5HhU9ATh+i+gHWvVcljFTcTWQ/dyHJCTrzCixde+r/asL2ErDA==
+"@types/amqplib@0.10.8":
+  version "0.10.8"
+  resolved "https://registry.yarnpkg.com/@types/amqplib/-/amqplib-0.10.8.tgz#23f2945d055e9fd583da672aa5ec0c7350b9e4e6"
+  integrity sha512-vtDp8Pk1wsE/AuQ8/Rgtm6KUZYqcnTgNvEHwzCkX8rL7AGsC6zqAfKAAJhUZXFhM/Pp++tbnUHiam/8vVpPztA==
   dependencies:
     "@types/node" "*"
 
