@@ -495,12 +495,12 @@
   resolved "https://registry.yarnpkg.com/@fastify/busboy/-/busboy-2.1.1.tgz#b9da6a878a371829a0502c9b6c1c143ef6663f4d"
   integrity sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==
 
-"@golevelup/nestjs-discovery@^2.3.1":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@golevelup/nestjs-discovery/-/nestjs-discovery-2.3.2.tgz#d0c20db688319b4adc0fa484ce2ecee6e46a01d1"
-  integrity sha512-qfUfXZPIJd9n5li97Ggub8QEV5rjTLKNHjdEw36B4ugM29GXQBAhTmcWbTF6UO78SZguIJNACx2DlDwSgJYpcg==
+"@golevelup/nestjs-discovery@^6.0.0":
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/@golevelup/nestjs-discovery/-/nestjs-discovery-6.1.2.tgz#10ee27d7bbb58ad319bd7b99ce41638fd4ff42c2"
+  integrity sha512-jP2jFpWycx2vtJQOXGAPHJLVfltYMvV6in7AY/jQA5DAXQRLEzi1HQUi0QVyyF/PwkL/k5ch+svHA1QA+KbLJA==
   dependencies:
-    lodash "^4.17.15"
+    lodash "^4.17.21"
 
 "@humanfs/core@^0.19.1":
   version "0.19.1"
