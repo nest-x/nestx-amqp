@@ -31,7 +31,7 @@
     "@golevelup/nestjs-discovery": "^2.3.1",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
-    "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/platform-express": "^11.0.0",
     "amqp-connection-manager": "^4.0.0",
     "amqplib": "^0.10.0",
     "patch-package": "^6.2.0",
@@ -41,9 +41,9 @@
     "rxjs": "^7.0.0"
   },
   "devDependencies": {
-    "@nestjs/cli": "10.4.9",
-    "@nestjs/schematics": "9.2.0",
-    "@nestjs/testing": "8.4.7",
+    "@nestjs/cli": "11.0.16",
+    "@nestjs/schematics": "11.0.9",
+    "@nestjs/testing": "11.1.14",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "@types/amqp-connection-manager": "3.4.5",
