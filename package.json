@@ -1,6 +1,6 @@
 {
   "name": "nestx-amqp",
-  "version": "2.0.6",
+  "version": "3.0.0",
   "description": "nestjs x amqp-connection-manager module",
   "repository": {
     "type": "git",
@@ -70,7 +70,11 @@
     "typescript": "^5.0.0"
   },
   "jest": {
-    "moduleFileExtensions": ["ts", "js", "json"],
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ],
     "transform": {
       "^.+\\.ts$": "ts-jest"
     },
@@ -80,7 +84,9 @@
       "!<rootDir>/src/shared/**/*.ts",
       "!<rootDir>/src/index.ts"
     ],
-    "testMatch": ["<rootDir>/src/**/*.test.ts"],
+    "testMatch": [
+      "<rootDir>/src/**/*.test.ts"
+    ],
     "testEnvironment": "node",
     "coverageDirectory": "<rootDir>/reports/coverage"
   },
