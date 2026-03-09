@@ -10,7 +10,7 @@ import { AMQP_TEST_URLS } from './__fixtures__/amqp.test.fixtures';
 import { wait } from './__fixtures__/shared.utils';
 
 describe('Amqp Decorators', () => {
-  it('# should use @PublishQueue decorator with default connection', async (done) => {
+  it('# should use @PublishQueue decorator with default connection', async () => {
     const queue = 'TEST.QUEUE';
 
     @Injectable()
@@ -41,10 +41,9 @@ describe('Amqp Decorators', () => {
 
     await wait(2000);
     await app.close();
-    done();
   });
 
-  it('# should use @PublishQueue decorator and keep return value', async (done) => {
+  it('# should use @PublishQueue decorator and keep return value', async () => {
     const queue = 'TEST.QUEUE.WITH.RETURN.VALUE';
     const returnValue = 2;
 
@@ -79,10 +78,9 @@ describe('Amqp Decorators', () => {
 
     await wait(2000);
     await app.close();
-    done();
   });
 
-  it('# should use @PublishQueue with named connection', async (done) => {
+  it('# should use @PublishQueue with named connection', async () => {
     const queue = {
       name: 'TEST.QUEUE'
     };
@@ -118,10 +116,9 @@ describe('Amqp Decorators', () => {
 
     await wait(2000);
     await app.close();
-    done();
   });
 
-  it('# should use @PublishExchange decorator with default connection', async (done) => {
+  it('# should use @PublishExchange decorator with default connection', async () => {
     const exchange = '';
     const routingKey = 'TEST.ROUTING.KEY';
 
@@ -157,10 +154,9 @@ describe('Amqp Decorators', () => {
     await wait(2000);
     expect(service.consumed).toEqual(1);
     await app.close();
-    done();
   });
 
-  it('# should use @SubscribeQueue decorator with default connection', async (done) => {
+  it('# should use @SubscribeQueue decorator with default connection', async () => {
     @Injectable()
     class TestMessageService {
       public consumed = 0;
@@ -194,10 +190,9 @@ describe('Amqp Decorators', () => {
     expect(service.consumed).toEqual(1);
 
     await app.close();
-    done();
   });
 
-  it('# should call send function in subscribe handler works(context)', async (done) => {
+  it('# should call send function in subscribe handler works(context)', async () => {
     const queue = 'TEST.QUEUE.CROSSOVER';
     const replyQueue = 'TEST.REPLY.QUEUE';
 
@@ -248,10 +243,9 @@ describe('Amqp Decorators', () => {
 
     expect(service.replyCount).toEqual(1);
     await app.close();
-    done();
   });
 
-  it('# should consumeOptions#retry/retryAttempted logic works', async (done) => {
+  it('# should consumeOptions#retry/retryAttempted logic works', async () => {
     const queue = 'TEST.QUEUE.WITH.RETRY';
     const replyQueue = 'TEST.REPLY.QUEUE.WITH.RETRY';
     const exceptionQueue = 'TEST.EXCEPTION.QUEUE';
@@ -319,10 +313,9 @@ describe('Amqp Decorators', () => {
     expect(service.exceptionCount).toEqual(1);
 
     await app.close();
-    done();
   });
 
-  it('# should consumeOptions#retry/retryAttempted logic works without maxAttempted', async (done) => {
+  it('# should consumeOptions#retry/retryAttempted logic works without maxAttempted', async () => {
     const queue = 'TEST.QUEUE.WITH.RETRY';
     const replyQueue = 'TEST.REPLY.QUEUE.WITH.RETRY';
     const exceptionQueue = 'TEST.EXCEPTION.QUEUE';
@@ -388,6 +381,5 @@ describe('Amqp Decorators', () => {
     expect(service.exceptionCount).toEqual(0);
 
     await app.close();
-    done();
   });
 });
