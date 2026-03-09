@@ -7,7 +7,7 @@ import { AmqpModule } from '../amqp.module';
 import { InjectAmqpConnection } from '../decorators/inject-connection';
 
 describe('AMQP Module: Multi Connections ', () => {
-  it('# should module register default connection and named connection for 3rd-party libs', async (done) => {
+  it('# should module register default connection and named connection for 3rd-party libs', async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.register({
@@ -29,10 +29,9 @@ describe('AMQP Module: Multi Connections ', () => {
 
     await app.close();
 
-    done();
   });
 
-  it('# should module register default connection and named connection for 3rd-party libs async', async (done) => {
+  it('# should module register default connection and named connection for 3rd-party libs async', async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRootAsync({
@@ -58,10 +57,9 @@ describe('AMQP Module: Multi Connections ', () => {
     expect(AmqpContainer.getInstance().size()).toEqual(2);
 
     await app.close();
-    done();
   });
 
-  it('# should module register two connection and can used @InjectAMQPConnection(name) for use different connection', async (done) => {
+  it('# should module register two connection and can used @InjectAMQPConnection(name) for use different connection', async () => {
     @Injectable()
     class TestingMessageService {
       constructor(
@@ -96,6 +94,5 @@ describe('AMQP Module: Multi Connections ', () => {
     expect(AmqpContainer.getInstance().size()).toEqual(2);
 
     await app.close();
-    done();
   });
 });

@@ -3,7 +3,7 @@ import { AMQP_TEST_URLS } from '../__tests__/__fixtures__/amqp.test.fixtures';
 import { AmqpModule } from '../amqp.module';
 
 describe('Amqp Module', () => {
-  it('# should module define with sync connection options correctly', async (done) => {
+  it('# should module define with sync connection options correctly', async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.register({
@@ -20,10 +20,9 @@ describe('Amqp Module', () => {
     expect(amqpModule).toBeInstanceOf(AmqpModule);
 
     await app.close();
-    done();
   });
 
-  it('# should module define with async connection options correctly', async (done) => {
+  it('# should module define with async connection options correctly', async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRootAsync({
@@ -42,6 +41,5 @@ describe('Amqp Module', () => {
     expect(amqpModule).toBeInstanceOf(AmqpModule);
 
     await app.close();
-    done();
   });
 });

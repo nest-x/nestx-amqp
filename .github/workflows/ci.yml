@@ -8,22 +8,23 @@ jobs:
     services:
       rabbitmq:
         image: rabbitmq:3-management
-    container:
-      image: node:lts
-      env:
-        CI: 'true'
-        RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
+        ports:
+          - 5672:5672
     steps:
-      - name: SCM
-        uses: actions/checkout@v2
-      - name: Install Dependencies and Build
-        run: |
-          yarn
-          yarn test:cov
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          token: ${{secrets.CODECOV_TOKEN}}
-          file: ./reports/coverage/lcov.info
-          flags: unittests
-          name: codecov-umbrella
+          node-version: 22
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm build
+      - name: Test
+        run: pnpm test:cov
+        env:
+          RABBITMQ_URL: amqp://guest:guest@localhost:5672
