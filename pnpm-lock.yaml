@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@golevelup/nestjs-discovery':
-        specifier: ^6.0.0
-        version: 6.1.2(@nestjs/common@11.1.19(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.19)
+        specifier: ^7.0.0
+        version: 7.0.0(@nestjs/common@11.1.19(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.19)
       amqp-connection-manager:
         specifier: ^4.0.0
         version: 4.1.15(amqplib@0.10.9)
@@ -357,11 +357,11 @@ packages:
     resolution: {integrity: sha512-rZAP3aVgB9ds9KOeUSL+zZ21hPmo8dh6fnIFwRQj5EAZl9gzR7wxYbYXYysAM8CTqGmUGyp2S4kUdV17MnGuWQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  '@golevelup/nestjs-discovery@6.1.2':
-    resolution: {integrity: sha512-jP2jFpWycx2vtJQOXGAPHJLVfltYMvV6in7AY/jQA5DAXQRLEzi1HQUi0QVyyF/PwkL/k5ch+svHA1QA+KbLJA==}
+  '@golevelup/nestjs-discovery@7.0.0':
+    resolution: {integrity: sha512-l2O4qokytyBwTqNKNOv3OITdJtYfV0f6eLqR5c0brS1Hy4MV4h9YXy+o534yczOcxWnDfeATArDpLxz88wonSQ==}
     peerDependencies:
-      '@nestjs/common': ^11.1.12
-      '@nestjs/core': ^11.1.12
+      '@nestjs/common': ^11.1.17
+      '@nestjs/core': ^11.1.17
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -2763,7 +2763,7 @@ snapshots:
       '@eslint/core': 1.2.1
       levn: 0.4.1
 
-  '@golevelup/nestjs-discovery@6.1.2(@nestjs/common@11.1.19(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.19)':
+  '@golevelup/nestjs-discovery@7.0.0(@nestjs/common@11.1.19(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.19)':
     dependencies:
       '@nestjs/common': 11.1.19(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@nestjs/core': 11.1.19(@nestjs/common@11.1.19(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.19)(reflect-metadata@0.2.2)(rxjs@7.8.2)
