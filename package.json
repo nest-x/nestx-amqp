@@ -37,7 +37,7 @@
   "dependencies": {
     "@golevelup/nestjs-discovery": "^6.0.0",
     "amqp-connection-manager": "^4.0.0",
-    "amqplib": "^0.10.0"
+    "amqplib": "^1.0.0"
   },
   "peerDependencies": {
     "@nestjs/common": "^11.0.0",
