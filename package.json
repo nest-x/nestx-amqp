@@ -35,7 +35,7 @@
     "provenance": true
   },
   "dependencies": {
-    "@golevelup/nestjs-discovery": "^6.0.0",
+    "@golevelup/nestjs-discovery": "^7.0.0",
     "amqp-connection-manager": "^4.0.0",
     "amqplib": "^0.10.0"
   },
